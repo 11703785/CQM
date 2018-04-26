@@ -1,0 +1,15 @@
+.ftitle{  
+	font-size:14px;  
+	font-weight:bold;  
+	padding:5px 0;  
+	margin-bottom:10px;  
+	border-bottom:1px solid #ccc;  
+}
+.fitem{  
+	margin-bottom:5px;  
+}
+.fitem label{  
+	margin-left:5px; 
+	display:inline-block;  
+	width:95px;  
+}

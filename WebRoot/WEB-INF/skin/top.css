@@ -1,0 +1,98 @@
+html {
+	height:100%;
+}
+
+body {
+	border:0px;
+	margin-left: 0px;
+	margin-top: 0px;
+	font-size: 12px;
+	color: #000000;
+	margin: 0px;
+	padding:0px;
+	height:100%;
+}
+
+a{
+	color:#000;
+	list-type-style:none;
+	text-decoration:none;
+}	
+
+a:hover{
+	color:#b32e3b;
+	list-type-style:none;
+	text-decoration:none;
+}	
+
+.boxleft{background: url(../resource/l.gif);width: 9px;float: left;height:30px;margin-left:3px;}
+.boxcenter{background: url(../resource/c.gif);float:left;height:30px;width: 80px;}
+.boxright{background: url(../resource/r.gif);width: 9px;float:left;height:30px;}
+
+.header-box{
+	width:100%;
+	height:100%;
+	background:url(../resource/images/header_bg.gif) no-repeat center;
+	}
+
+.header-box a{
+	display:block;
+	margin-top: 4px;
+	text-decoration:none; 
+}
+.header-box a:link{color:black;}
+.header-box a:visited{color:black;}
+.header-box a:hover{font-weight: bold;}
+
+.ioc-sys{
+	height:22px;
+	line-height: 22px;
+	padding-left:25px;
+	float:left;
+	background:url(../resource/sys.gif) repeat-y;
+	}
+.ioc-basedata{
+	background:url(../resource/bdata.gif) repeat-y;
+	}
+.ioc-app{
+	background:url(../resource/app.gif) repeat-y;
+	}
+.ioc-home{
+	height:22px;
+	line-height: 22px;
+	padding-left:25px;
+	float:left;
+	background:url(../resource/11.gif) repeat-y;
+	}
+
+.exit-a{
+	height:16px;
+	line-height: 16px;
+	background:url(../resource/images/icon/icon2.gif) repeat-y;
+	padding-left:17px;
+	float:right;
+	margin-right: 5px;
+} 
+.password-a{
+	height:16px;
+	line-height: 16px;
+	background:url(../resource/images/icon/icon1.gif) repeat-y;
+	padding-left:17px;
+	float:right;
+	margin-right: 5px;
+}
+ 
+.help-a{
+	height:16px;
+	line-height: 16px;
+	background:url(../resource/images/icon/help.png) repeat-y;
+	padding-left:17px;
+	float:right;
+	margin-right: 5px;
+} 
+.title-a{
+	height:80px;
+	width:80px;
+	line-height: 80px;
+	float:left;
+} 

@@ -1,0 +1,105 @@
+*{
+	font-size:12px;
+}
+body {
+    font-family:verdana,helvetica,arial,sans-serif;
+    padding:20px;
+    font-size:12px;
+    margin:0;
+}
+h2 {
+    font-size:18px;
+    font-weight:bold;
+    margin:0;
+    margin-bottom:15px;
+}
+.demo-info{
+	padding:0 0 12px 0;
+}
+.demo-tip{
+	display:none;
+}
+.textbox{
+	height:20px;
+	width:200px;
+	margin:0;
+	padding:0 2px;
+	box-sizing:content-box;
+}
+
+.commontd{
+	 background-color:#DDDDDD;text-align:center;border-right:1px solid #AAA;border-bottom:1px solid #AAA;
+	 }
+.commontdbr{
+	 text-align:left;border-right:1px solid #AAA;border-bottom:1px solid #AAA;
+	 }
+.applytd{
+	 background-color:#DDDDDD;width:180px;text-align:center;border-right:1px solid #AAA;border-bottom:1px solid #AAA;
+	 }
+.applystd{
+	 background-color:#DDDDDD;width:120px;text-align:center;border-right:1px solid #AAA;border-bottom:1px solid #AAA;
+	 }
+ .applytdnotcolor{
+	 width:180px;text-align:left;border-right:1px solid #AAA;border-bottom:1px solid #AAA;
+	 }
+.applytable{
+	text-align:center; margin-top:20px;border-left:0px solid #AAA;border-top:1px solid #AAA;border-right:0px solid #AAA;border-bottom:0px solid #AAA;
+}
+
+/*
+ * Page: Login & Register
+ * ----------------------
+ */
+.login-logo,
+.register-logo {
+  font-size: 35px;
+  text-align: center;
+  margin-bottom: 25px;
+  font-weight: 300;
+}
+.login-logo a,
+.register-logo a {
+  color: #444;
+}
+.login-page,
+.register-page {
+  background: #d2d6de;
+}
+.login-box,
+.register-box {
+  width: 360px;
+  margin: 7% auto;
+}
+@media (max-width: 768px) {
+  .login-box,
+  .register-box {
+    width: 90%;
+    margin-top: 20px;
+  }
+}
+.login-box-body,
+.register-box-body {
+  background: #fff;
+  padding: 20px;
+  border-top: 0;
+  color: #666;
+}
+.login-box-body .form-control-feedback,
+.register-box-body .form-control-feedback {
+  color: #777;
+}
+.login-box-msg,
+.register-box-msg {
+  margin: 0;
+  text-align: center;
+  padding: 0 20px 20px 20px;
+}
+.social-auth-links {
+  margin: 10px 0;
+}
+
+
+
+.form-group {
+  margin-bottom: 15px;
+}

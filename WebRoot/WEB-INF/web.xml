@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee   http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"> -->
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee   http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+ 
+	<!-- 解决java.beans.Introspector导致内存泄漏的问题 必须放于第一行 -->
+	<listener> 
+		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class> 
+	</listener>
+	
+	<!-- 设置log4j配置文件路径 -->
+	<context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>classpath:log4j.properties</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+	
+	<!-- 配置字符集 -->
+	<filter>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>utf-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- 配置SpringMVC -->  
+	<servlet>
+		<servlet-name>springMVC</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:spring-mvc.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<!-- url-pattern配置为/，不带文件后缀，会造成其它静态文件(js，css等)不能访问。如配为*.action，则不影响静态文件的访问 
+	<servlet-mapping>
+		<servlet-name>springMVC</servlet-name>
+		<url-pattern>*.action</url-pattern>
+	</servlet-mapping>-->
+	
+	<!-- 设置Spring监听器 -->
+	<context-param>  
+	    <param-name>contextConfigLocation</param-name>  
+	    <param-value>classpath:applicationContext*.xml</param-value>  
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<!-- 加密压缩 优化  begin -->
+	<!-- GZIPFilter Definition -->
+	<filter>
+    	<filter-name>GZIPFilter</filter-name>
+    	<filter-class>com.tacitknowledge.filters.gzipfilter.GZIPFilter</filter-class>
+	</filter>
+
+	<!-- CacheFilter Definition -->
+	<filter>
+		<filter-name>CacheFilter</filter-name>
+    	<filter-class>com.tacitknowledge.filters.cache.CacheHeaderFilter</filter-class>
+	</filter>
+	
+	<!-- GZIPFilter Mappings  - Alter to fit your circumstances -->  
+	<filter-mapping>
+		<filter-name>GZIPFilter</filter-name>
+		<url-pattern>*.css</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>GZIPFilter</filter-name>
+		<url-pattern>*.js</url-pattern>
+	</filter-mapping>
+
+	<!-- CacheFilter Mappings  - Alter to fit your circumstances -->
+	<filter-mapping>
+		<filter-name>CacheFilter</filter-name>
+		<url-pattern>*.gif</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>CacheFilter</filter-name>
+		<url-pattern>*.jpg</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>CacheFilter</filter-name>
+		<url-pattern>*.png</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>CacheFilter</filter-name>
+		<url-pattern>*.js</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>CacheFilter</filter-name>
+		<url-pattern>*.css</url-pattern>
+	</filter-mapping>
+	<!-- 加密压缩 优化  end -->
+	
+	<servlet>
+		<servlet-name>SyncUploadCreditLog</servlet-name>
+		<servlet-class>com.platform.application.common.util.SyncUploadCreditLog</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>SyncUploadCreditLog</servlet-name>
+		<url-pattern>/syncUploadCreditLog</url-pattern>
+	</servlet-mapping>
+	
+	
+	
+	
+	<!-- 设置session过期时间 -->
+	<session-config>
+		<session-timeout>100</session-timeout>
+	</session-config>
+	<servlet-mapping>
+        <servlet-name>springMVC</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+	<!-- 欢迎页 -->
+	<welcome-file-list>
+		<welcome-file>/</welcome-file>
+	</welcome-file-list>
+	<login-config>
+		<auth-method>BASIC</auth-method>
+	</login-config>
+</web-app>
