@@ -19,7 +19,7 @@
 <link rel="stylesheet" type="text/css" href="<%=webapp%>/skin/top.css" />
 <link rel="stylesheet" type="text/css" href="<%=webapp%>/skin/welcome.css" />
 <link rel="stylesheet" type="text/css" href="<%=webapp%>/skin/common.css" />
-
+<link rel="stylesheet" type="text/css" href="<%=webapp%>/skin/default.css" />
 <script language="javascript" src="<%=webapp%>/resource/echart/js/echarts.js"></script>
 <script language="javascript" src="<%=webapp%>/resource/echart/js/macarons.js"></script>
 

@@ -1,0 +1,120 @@
+.textbox-text-disabled {
+    color: #000000;
+    background-color: #F4F4F4;
+    margin: 1px;
+}
+
+.tree-node {
+    height: 20px;
+    white-space: nowrap;
+    cursor: pointer;
+    padding: 2px 2px;
+}
+
+.rjhc-table-panel {
+    border-width: 0px;
+    border-style: solid;
+    overflow: auto;
+    padding: 0;
+    border-color: #95B8E7;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 12px;
+}
+
+.rjhc-panel-north {
+    padding: 5px;
+    border: none;
+    overflow: hidden;
+}
+
+.rjhc-panel-center {
+    padding: 5px;
+    border: none;
+    overflow: hidden;
+}
+
+.rjhc-panel-south {
+    text-align: right;
+    padding: 5px;
+    border: none;
+}
+
+.rjhc-panel-south a {
+    width: 80px;
+}
+
+.rjhc-panel-inner {
+    padding: 15px;
+}
+
+.rjhc-table-dialog {
+    width: 486px;
+}
+
+.rjhc-table-dialog input {
+    width: 136px;
+}
+
+.rjhc-table-dialog .rjhc-table-colspan-3 {
+    width: 394px;
+}
+
+.rjhc-table-dialog select {
+    width: 140px;
+}
+
+.rjhc-table-dialog td {
+    padding: 3px 2px;
+    width: 80px
+}
+
+.rjhc-table-dialog td.firstval {
+    width: 170px;
+}
+
+.rjhc-table-dialog td.secondval {
+    width: 140px;
+}
+
+.rjhc-detail-content {
+    width: 754px !important;
+    padding: 0px;
+}
+
+.rjhc-detail-buttons {
+    text-align: right;
+    padding: 5px;
+    border-width: 1px 0 0 0
+}
+
+.rjhc-table-detail {
+    border: none;
+    width: 744px
+}
+
+.rjhc-table-detail input {
+    width: 136px;
+}
+
+.rjhc-table-detail .rjhc-table-colspan-3 {
+    width: 394px;
+}
+
+.rjhc-table-detail select {
+    width: 140px;
+}
+
+.rjhc-table-detail td {
+    border: none;
+    padding: 3px 2px;
+    width: 80px
+}
+
+.rjhc-table-detail td.firstval {
+    width: 170px;
+}
+
+.rjhc-table-detail td.secondval {
+    width: 140px;
+}

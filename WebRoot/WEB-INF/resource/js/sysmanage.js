@@ -1095,3 +1095,64 @@ DataFromManager.submit = function(){
          }
      });
 };
+/** rjhc Begin creat by wyl*/
+var rjhc = rjhc || {};
+$.ajaxSetup({
+    contentType: 'application/json'
+});
+/**
+ * 动态生成加载窗口
+ *
+ * @param options
+ * @returns
+ */
+rjhc.showDialog = function (options) {
+    var dialog = $("<div/>").appendTo("body").attr("id", options.id);
+    $(dialog).data("key", options);
+    var cfg = {
+        border: false,
+        resizable: false,
+        collapsible: false,
+        minimizable: false,
+        maximizable: false,
+        cache: false,
+        closable: false,
+        /** 关闭面板之后 */
+        onClose: function () {
+            $(dialog).window('destroy');
+        },
+        close: function () {
+            $(dialog).window('destroy');
+        }
+    };
+    $.extend(cfg, options);
+    $(dialog).window(cfg);
+    return $(dialog);
+};
+$(function () {
+    $.extend($.fn.window.defaults, {closable: true});
+    $.extend($.fn.combobox.defaults, {
+        formatter: function (row) {
+            var _5f = $(this).combobox("options");
+            if (row[_5f.textField] == "") {
+                return "&nbsp;";
+            } else {
+                return row[_5f.textField];
+            }
+        },
+        loadFilter: function (_65) {
+            var opts = $(this).combobox("options");
+            if (opts.required) {
+                return _65;
+            } else {
+                var obj = {};
+                obj[opts.valueField] = "";
+                obj[opts.textField] = "";
+                var objArr = $.makeArray(obj);
+                objArr = $.merge(objArr, _65);
+                return objArr;
+            }
+        }
+    });
+})
+/** rjhc end*/
