@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=GBK" pageEncoding="GBK"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>æ¬¢è¿æ‚¨ç™»å½•-é™•è¥¿çœå¾ä¿¡æŸ¥è¯¢ç›‘æµ‹ç³»ç»Ÿ</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>»¶Ó­ÄúµÇÂ¼-ÉÂÎ÷Ê¡Õ÷ĞÅ²éÑ¯¼à²âÏµÍ³</title>
 <link rel="icon" href="skin/favicon.ico" type="image/x-icon" />
 <link rel="stylesheet" type="text/css" href="resource/easyui/themes/gray/easyui.css"/>
 <link rel="stylesheet" type="text/css" href="resource/easyui/themes/icon.css"/>
@@ -26,21 +26,28 @@ $(document).keydown(function(event){
 }); 
 
 function loginSubmit(){
-	
-	$.post("login.action",{"person.userAccount.loginName":$("#loginName").val(),"person.userAccount.userPwd":$("#password").val()},function(result){
-		var rArr = result.split(";");
-		if (rArr[0]=="false"){//ç™»å½•å¤±è´¥
-			alert("ç™»å½•å¤±è´¥ï¼š"+rArr[1]);
-		}else{//ç™»å½•æˆåŠŸ
+	$.post("login", {
+			userId : $("#loginName").val(),
+			userPwd : $("#password").val()
+		}, function(data){
+			if(data.status){
+				window.location.href = "index";
+			} else {
+				alert("µÇÂ¼Ê§°Ü£º" + data.error);
+			}
+		/* 	console.log(data);
+		if (rArr[0]=="false"){//µÇÂ¼Ê§°Ü
+			alert("µÇÂ¼Ê§°Ü£º"+rArr[1]);
+		} else{//µÇÂ¼³É¹¦
 			location.replace("goon.action");
-			/*if(rArr[1]=="1" || rArr[1]=="0"){//å·²æ³¨å†Œ
-			}else{//è¯•ç”¨æœŸ æˆ– è¿‡æœŸ
+			/*if(rArr[1]=="1" || rArr[1]=="0"){//ÒÑ×¢²á
+			}else{//ÊÔÓÃÆÚ »ò ¹ıÆÚ
 				location.replace("index_anonymous.action?flag="+rArr[1]+"&version="+rArr[2]+"&days="+rArr[3]);
-			}*/
-		}
+			}
+		} */
 	});
 }
-//ç‚¹å‡»enteré”®è¿›è¡Œç™»é™†
+//µã»÷enter¼ü½øĞĞµÇÂ½
 
 </script>
 </head>
@@ -56,19 +63,19 @@ function loginSubmit(){
 			<td style="vertical-align:middle;">
 			
 				<div class="login-box-body" style="margin-left:35px;-moz-border-radius:20px;-webkit-border-radius:20px;border-radius:10px;filter:alpha(Opacity=55);-moz-opacity:0.55;opacity: 0.55;height:225px;width:260px">
-			    <p class="login-box-msg">æ¬¢ è¿ ç™» å½•</p>
+			    <p class="login-box-msg">»¶ Ó­ µÇ Â¼</p>
 			    <form id="loginForm" method="post">
 			    	<table cellpadding="10" align="center" border="0">
 			    		<tr>
-			    			<td>ç™»å½•å:</td>
-			    			<td><input class="easyui-textbox" style="height: 30px;width:160px;" type="text" id="loginName" name="person.userAccount.loginName"></input></td>
+			    			<td>µÇÂ¼Ãû:</td>
+			    			<td><input class="easyui-textbox" style="height: 30px;width:160px;" type="text" id="loginName" name="userId"></input></td>
 			    		</tr>
 			    		<tr>
-			    			<td>å¯†ç :</td>
-			    			<td><input class="easyui-textbox" style="height: 30px;width:160px;" type="password" id="password" name="person.userAccount.userPwd" ></input></td>
+			    			<td>ÃÜÂë:</td>
+			    			<td><input class="easyui-textbox" style="height: 30px;width:160px;" type="password" id="password" name="userPwd" ></input></td>
 			    		</tr>
 			    		<tr>
-			    			<td colspan="2" align="right"><a href="javascript:loginSubmit();" style="width:120px;height:30px;margin: 15px;" class="easyui-linkbutton c6">ç™»å½•</a></td>
+			    			<td colspan="2" align="right"><a href="javascript:loginSubmit();" style="width:120px;height:30px;margin: 15px;" class="easyui-linkbutton c6">µÇÂ¼</a></td>
 			    		</tr>
 		
 			    	</table>

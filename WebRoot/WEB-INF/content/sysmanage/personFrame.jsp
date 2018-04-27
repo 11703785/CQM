@@ -5,9 +5,11 @@
 			checkbox:false,
 			url:'loadDeptJson.action?node=-1',
 			onBeforeExpand:function(node,param){
+				console.log(node.id);
 				$('#personDeptTree').tree('options').url="loadDeptJson.action?node="+node.id;
 			},
 			onSelect:function(node){
+				console.log(node.id);
 				$('#personContent').panel("refresh","listPerson.action?person.department.deptId="+node.id);
 			},
 			onLoadSuccess:function(){

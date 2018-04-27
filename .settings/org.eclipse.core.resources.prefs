@@ -19,5 +19,6 @@ encoding//resource/config=UTF-8
 encoding//resource/config/config.properties=UTF-8
 encoding//resource/config/hibernate.properties=UTF-8
 encoding//resource/config/project.properties=UTF-8
+encoding//src/com/platform/application/sysmanage/login/LoginService.java=UTF-8
 encoding//src/com/platform/framework/common/util/SpringContextUtil.java=UTF-8
 encoding/<project>=UTF-8

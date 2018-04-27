@@ -1,7 +1,6 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="curuser" value="#session.cur_user" />
-<% String webapp = request.getContextPath(); %>
 <script>
 function changePassword(){
 		$("#common_dlg").dialog({
@@ -152,8 +151,8 @@ location.href="manualDownload.action";
 
 <table class="header-box" border="0" cellspacing="0" cellpadding="0">
 	<tr>
-		<td rowspan="2" style="width:10%" align="right"><img align="middle" style="width: 72px;height: 69px;" src="<%=webapp%>/resource/images/header_logo.gif" /></td>
-		<td style="vertical-align:bottom;"><img style="width: 293px;height: 32px;margin-left: 8px;" src="<%=webapp%>/resource/images/title.gif" /></td>
+		<td rowspan="2" style="width:10%" align="right"><img align="middle" style="width: 72px;height: 69px;" src="resource/images/header_logo.gif" /></td>
+		<td style="vertical-align:bottom;"><img style="width: 293px;height: 32px;margin-left: 8px;" src="resource/images/title.gif" /></td>
 		<td style="width: 650px;vertical-align:top;padding-top: 3px;">
 			<a href="logout.action" class="exit-a">退出</a>
 			<a href="javascript:changePassword()" class="password-a">修改密码</a>
@@ -163,7 +162,7 @@ location.href="manualDownload.action";
 		<td >&nbsp;</td>
 
 		<td style="height: 20px;text-align: right;" valign="top">
-			<font color="white">欢迎您&nbsp;[${person.department.deptName}]，&nbsp;[${person.loginName}]&nbsp;${curdate}，${curweek}&nbsp;&nbsp;&nbsp;&nbsp; </font>
+			<font color="white">欢迎您&nbsp;[${loginInfo.orgName}]，&nbsp;[${loginInfo.userId}]&nbsp;${curdate}，${curweek}&nbsp;&nbsp;&nbsp;&nbsp; </font>
 
 		</td>
 	</tr>

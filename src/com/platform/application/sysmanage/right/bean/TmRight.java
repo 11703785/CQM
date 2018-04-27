@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.platform.application.sysmanage.right.RightDto;
+import com.platform.application.sysmanage.right.TmRightDto;
 
 @Entity
 @Table(name = "TM_RIGHT")
@@ -42,7 +42,6 @@ public class TmRight implements Serializable{
 	 */
 	private String isFrame;
 
-	private String contRight;
 
 	/**
 	 * 获取权限代码.
@@ -159,14 +158,6 @@ public class TmRight implements Serializable{
 		isFrame = isFrameVal;
 	}
 
-	@Column(name = "CONTRIGHT")
-	public String getContRight() {
-		return contRight;
-	}
-
-	public void setContRight(final String contRight) {
-		this.contRight = contRight;
-	}
 
 	@Override
 	public String toString() {
@@ -193,15 +184,14 @@ public class TmRight implements Serializable{
 	 *
 	 * @return TmRightDto
 	 */
-	public RightDto convertDto() {
-		final RightDto dto = new RightDto();
+	public TmRightDto convertDto() {
+		final TmRightDto dto = new TmRightDto();
 		dto.setRightCode(rightCode);
 		dto.setRightName(rightName);
 		dto.setRightPath(rightPath);
 		dto.setRightMethod(rightMethod);
 		dto.setTopAdmin(topAdmin);
 		dto.setIsFrame(isFrame);
-		dto.setContRight(contRight);
 		return dto;
 	}
 }

@@ -4,31 +4,44 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.platform.application.sysmanage.role.RoleDto;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.platform.application.common.dto.AbstractDto;
+import com.platform.application.sysmanage.role.TmRoleDto;
 import com.platform.application.sysmanage.user.bean.TmUser;
 
-public class UserDto {
+@SuppressWarnings("serial")
+public class UserDto extends AbstractDto implements java.io.Serializable {
 	/**
 	 * 用户ID.
 	 */
+	@NotBlank(message = "用户ID不能为空")
+	@Size(max = 32, message = "用户ID长度超出")
 	private String userId;
 
 	/**
 	 * 所属机构.
 	 */
+	@NotBlank(message = "机构代码不能为空")
+	@Size(max = 14, message = "机构代码长度超出")
 	private String orgCode;
 
 	/**
 	 * 用户名称.
 	 */
+	@NotBlank(message = "用户名称不能为空")
+	@Size(max = 64, message = "用户名称长度超出")
 	private String name;
 
 	/**
 	 * 用户密码.
 	 */
+	@Size(min = 6, message = "用户密码不能少于6位")
 	private String userPwd;
 
 	/**
@@ -39,6 +52,7 @@ public class UserDto {
 	/**
 	 * 邮箱.
 	 */
+	@Email(message = "邮箱格式不符合规则")
 	private String email;
 
 	/**
@@ -49,6 +63,7 @@ public class UserDto {
 	/**
 	 * 最后登录时间.
 	 */
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = TIMEZONE_BEIJING)
 	private Date lastLogonTime;
 
 	/**
@@ -65,6 +80,7 @@ public class UserDto {
 	/**
 	 * 创建时间.
 	 */
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = TIMEZONE_BEIJING)
 	private Date createTime;
 
 	/**
@@ -82,7 +98,7 @@ public class UserDto {
 	/**
 	 * 用户角色集合.
 	 */
-	private Set<RoleDto> tmRoles = new HashSet<RoleDto>(0);
+	private Set<TmRoleDto> tmRoles = new HashSet<TmRoleDto>(0);
 	/**
 	 * 用户类型.
 	 */
@@ -335,7 +351,7 @@ public class UserDto {
 	 *
 	 * @return 用户角色集合
 	 */
-	public Set<RoleDto> getTmRoles() {
+	public Set<TmRoleDto> getTmRoles() {
 		return this.tmRoles;
 	}
 
@@ -344,7 +360,7 @@ public class UserDto {
 	 *
 	 * @param tmRolesVal 用户角色集合
 	 */
-	public void setTmRoles(final Set<RoleDto> tmRolesVal) {
+	public void setTmRoles(final Set<TmRoleDto> tmRolesVal) {
 		this.tmRoles = tmRolesVal;
 	}
 
@@ -525,6 +541,7 @@ public class UserDto {
 		entity.setOrgCode(this.orgCode);
 		entity.setName(this.name);
 		entity.setUserPwd(this.userPwd);
+		entity.setType(type);
 		entity.setTelephone(this.telephone);
 		entity.setEmail(this.email);
 		entity.setUserDesc(this.userDesc);

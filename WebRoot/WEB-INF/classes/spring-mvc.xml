@@ -21,11 +21,11 @@
           <property name="sessionFactory" ref="sessionFactory" />  
         </bean>
         <!-- 自定义的权限拦截验证，如果不定义 mvc:mapping path 将拦截所有的URL请求 -->
-	    <mvc:interceptor>    
-	        <!-- 匹配的是url路径， 如果不配置或/**,将拦截所有的Controller -->  
+	    <!-- <mvc:interceptor>    
+	        匹配的是url路径， 如果不配置或/**,将拦截所有的Controller  
 	        <mvc:mapping path="/**" />   
 	        <bean class="com.platform.framework.interceptor.AccessInterceptor"></bean>    
-	    </mvc:interceptor> 
+	    </mvc:interceptor>  -->
     </mvc:interceptors>
 	<!-- 自动扫描注解组件并且自动注入 -->
 	<context:component-scan base-package="com.platform" use-default-filters='false'>  

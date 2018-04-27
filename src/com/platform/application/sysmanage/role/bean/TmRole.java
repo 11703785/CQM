@@ -18,7 +18,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import com.platform.application.sysmanage.right.bean.TmRight;
-import com.platform.application.sysmanage.role.RoleDto;
+import com.platform.application.sysmanage.role.TmRoleDto;
 
 /**
  * 平台角色管理实体类.
@@ -66,11 +66,6 @@ public class TmRole implements Serializable {
 	 * 创建时间.
 	 */
 	private Date createTime;
-
-	/**
-	 * 停用原因.
-	 */
-	private String stopReason;
 
 	/**
 	 * 非数据库字段,页面上选中的权限列表集合,多个权限逗号分隔.
@@ -243,25 +238,6 @@ public class TmRole implements Serializable {
 	}
 
 	/**
-	 * 获取停用原因.
-	 *
-	 * @return 停用原因
-	 */
-	@Column(name = "STOPREASON")
-	public String getStopReason() {
-		return stopReason;
-	}
-
-	/**
-	 * 设置停用原因.
-	 *
-	 * @param stopReasonVal 停用原因
-	 */
-	public void setStopReason(final String stopReasonVal) {
-		this.stopReason = stopReasonVal;
-	}
-
-	/**
 	 * 获取角色类型.
 	 *
 	 * @return 角色类型
@@ -332,8 +308,6 @@ public class TmRole implements Serializable {
 		buffer.append("creator").append("='").append(getCreator()).append("' ");
 		buffer.append("createTime").append("='").append(getCreateTime())
 		.append("' ");
-		buffer.append("stopReason").append("='").append(getStopReason())
-		.append("' ");
 		buffer.append("type").append("='").append(getType())
 		.append("' ");
 		buffer.append("]");
@@ -345,8 +319,8 @@ public class TmRole implements Serializable {
 	 *
 	 * @return 平台角色交互对象
 	 */
-	public RoleDto convertDto() {
-		RoleDto dto = new RoleDto();
+	public TmRoleDto convertDto() {
+		TmRoleDto dto = new TmRoleDto();
 		dto.setRoleCode(this.roleCode);
 		dto.setRoleName(this.roleName);
 		dto.setRoleDesc(this.roleDesc);
@@ -355,7 +329,6 @@ public class TmRole implements Serializable {
 		dto.setStopTime(this.stopTime);
 		dto.setCreator(this.creator);
 		dto.setCreatTime(this.createTime);
-		dto.setStopReason(this.stopReason);
 		dto.setType(this.type);
 		dto.setRights(this.rights);
 		return dto;
@@ -366,8 +339,8 @@ public class TmRole implements Serializable {
 	 *
 	 * @return 平台角色交互对象
 	 */
-	public RoleDto cascadeDto() {
-		RoleDto dto = convertDto();
+	public TmRoleDto cascadeDto() {
+		TmRoleDto dto = convertDto();
 		Set<String> rightSet = new HashSet<String>(0);
 		for (TmRight right : rightEntities) {
 			rightSet.add(right.getRightCode());

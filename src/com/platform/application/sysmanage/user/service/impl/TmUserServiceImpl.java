@@ -16,6 +16,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.platform.application.common.cache.CacheProxyFactory;
+import com.platform.application.sysmanage.org.OrgDto;
+import com.platform.application.sysmanage.org.cache.TmOrgCache;
 import com.platform.application.sysmanage.role.bean.TmRole;
 import com.platform.application.sysmanage.service.AbstractService;
 import com.platform.application.sysmanage.user.UserDto;
@@ -30,6 +33,9 @@ public class TmUserServiceImpl extends AbstractService implements TmUserService 
 
 	@Autowired
 	private PasswordEncoder encoder;
+
+	@Autowired
+	private CacheProxyFactory cacheProxyFactory;
 
 	@Value("${INIT_PWD}")
 	private String defaultPwd;
@@ -70,6 +76,7 @@ public class TmUserServiceImpl extends AbstractService implements TmUserService 
 	 * @param tranInst 用户实体类对象
 	 * @return 更新后交互对象
 	 */
+	@Override
 	@Transactional
 	public UserDto update(final TmUser tranInst) {
 		if (LOGGER.isDebugEnabled()) {
@@ -92,6 +99,7 @@ public class TmUserServiceImpl extends AbstractService implements TmUserService 
 	 * @param tranInst 用户实体类对象
 	 * @return 删除后交互对象
 	 */
+	@Override
 	@Transactional
 	public UserDto delete(final TmUser tranInst) {
 		if (LOGGER.isDebugEnabled()) {
@@ -113,6 +121,7 @@ public class TmUserServiceImpl extends AbstractService implements TmUserService 
 	 * @param instance
 	 * @return
 	 */
+	@Override
 	@Transactional
 	public List<UserDto> findFingerInfo(final UserDto dto) {
 		if (LOGGER.isDebugEnabled()) {
@@ -137,25 +146,27 @@ public class TmUserServiceImpl extends AbstractService implements TmUserService 
 			throw re;
 		}
 	}
+
 	/**
 	 * 通过用户ID获取用户信息,不进行级联获取
 	 * @param userId 用户标识
 	 * @return 用户交互对象
 	 */
+	@Override
 	@Transactional(readOnly = true)
 	public UserDto findById(final String userId) {
 		return this.findById(userId, false);
 	}
+
 	/**
-	 * 根据用户表示查找用户信息
+	 * 通过用户ID获取用户信息
 	 * @param userId 用户标识
-	 * @param cascade 是否级联
 	 * @return 用户交互对象
 	 */
-	@Transactional(readOnly = true)
+	@Override
 	public UserDto findById(final String userId, final boolean cascade) {
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("开始获取用户Id,用户标识[" + userId + "]");
+			LOGGER.debug("开始获取用户信息,用户标识[" + userId + "]");
 		}
 		try {
 			UserDto dto = null;
@@ -166,6 +177,8 @@ public class TmUserServiceImpl extends AbstractService implements TmUserService 
 				} else {
 					dto = instance.convertDto();
 				}
+				final OrgDto org = cacheProxyFactory.getCacheValue(TmOrgCache.class, instance.getOrgCode());
+				dto.setOrgName(org.getOrgName());
 			}
 			if (LOGGER.isDebugEnabled()) {
 				if (instance == null) {
@@ -187,6 +200,7 @@ public class TmUserServiceImpl extends AbstractService implements TmUserService 
 	 *            用户交互实体对象
 	 * @return 修改后用户交互实体对象
 	 */
+	@Override
 	@SuppressWarnings("unused")
 	public UserDto updateRole(final UserDto dto) {
 		if (LOGGER.isDebugEnabled()) {

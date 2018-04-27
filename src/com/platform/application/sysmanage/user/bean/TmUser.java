@@ -16,14 +16,13 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import com.platform.application.sysmanage.role.RoleDto;
+import com.platform.application.sysmanage.role.TmRoleDto;
 import com.platform.application.sysmanage.role.bean.TmRole;
 import com.platform.application.sysmanage.user.UserDto;
 
 /**
  * 用户信息实体类.
  *
- * @author aigf
  */
 @Entity
 @Table(name = "TM_USER")
@@ -416,6 +415,7 @@ public class TmUser implements java.io.Serializable {
 		dto.setUserId(this.userId);
 		dto.setOrgCode(this.orgCode);
 		dto.setName(this.name);
+		dto.setType(type);
 		dto.setUserPwd(this.userPwd);
 		dto.setTelephone(this.telephone);
 		dto.setEmail(this.email);
@@ -434,7 +434,7 @@ public class TmUser implements java.io.Serializable {
 	 */
 	public UserDto cascadeDto() {
 		UserDto dto = this.convertDto();
-		Set<RoleDto> roleSet = new HashSet<RoleDto>(0);
+		Set<TmRoleDto> roleSet = new HashSet<TmRoleDto>(0);
 		for (TmRole role : this.roleEntities) {
 			roleSet.add(role.convertDto());
 		}
