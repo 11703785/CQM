@@ -109,28 +109,8 @@ public class TmUserController extends BaseAction {
 			LOGGER.debug("POST /user/find [" + dto + "]");
 		}
 		try {
-			// 当起始日或结束日不为空时判断是否晚于当日
-			if (null != dto.getQueryStartTime() && dto.getQueryStartTime().after(new Date())) {
-				throw new Exception("创建起始日不能早于查询当日");
-			}
-			if (null != dto.getQueryEndTime() && dto.getQueryEndTime().after(new Date())) {
-				throw new Exception("创建结束日不能早于查询当日");
-			}
-			// 创建起始日与结束日都不为空时判断创建起始日是否晚于创建结束日
-			if (null != dto.getQueryStartTime() && null != dto.getQueryEndTime()) {
-				if (dto.getQueryStartTime().after(dto.getQueryEndTime())) {
-					throw new Exception("创建起始日不能晚于创建结束日");
-				}
-			}
-			// 创建结束日存在时加一天
-			if (null != dto.getQueryEndTime()) {
-				final Calendar calendar = Calendar.getInstance();
-				calendar.setTime(dto.getQueryEndTime());
-				calendar.add(Calendar.DATE, 1);
-				dto.setQueryEndTime(calendar.getTime());
-			}
 			final LoginInfo loginInfo = (LoginInfo) session.getAttribute(LoginInfo.HTTP_SESSION_LOGININFO);
-			final PageResponse<UserDto> results = tmUserService.findByDto(dto, loginInfo.getOrgCode());
+			final PageResponse<UserDto> results = tmUserService.findByDto(dto, loginInfo);
 			if (LOGGER.isDebugEnabled()) {
 				if (results.isStatus()) {
 					LOGGER.debug("POST /user/find 查询成功[" + dto + "]");
