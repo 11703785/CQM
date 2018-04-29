@@ -237,6 +237,63 @@ function creategrid(model, idField, singleSelect) {
         }
     });
 }
+
+function loadgridbyparam(model, idField, param) {
+    var url = model + "/findby";
+    if (param != undefined) {
+    	url = url + "/" + param
+    }
+    var formObj = $("#" + model + "_qf");
+    if (formObj != null) {
+        formObj.form('clear');
+    }
+    $("#" + model + "_dg").datagrid({
+        rownumbers: true,
+        singleSelect: true,
+        height: 15,
+        pagination: true,
+        pageList: [10, 20, 30],
+        pageSize: 20,
+        fitColumns: true,
+        fit: true,
+        url: model + "/findby",
+        toolbar: "#" + model + "_tb",
+        loader: loader,
+        view: detailview,
+        expandrow: -1,
+        idField: idField,
+        detailFormatter: function (index, row) {
+            return '<div class="ddv" style="padding:1px 0"></div>';
+        },
+        onExpandRow: function (index, row) {
+            if (this.expandrow >= 0 && this.expandrow != index) {
+                $(this).datagrid('collapseRow', this.expandrow);
+                $("#" + model + "_df").parent().remove();
+            }
+            $(this).datagrid('selectRow', index);
+            var grid = this;
+            var ddv = $(this).datagrid('getRowDetail', index).find('div.ddv');
+            ddv.panel({
+                height: "auto",
+                border: false,
+                cache: false,
+                href: model + "/showdetail/" + eval("row." + $(this).datagrid('options').idField),
+                onLoad: function () {
+                    $(grid).datagrid('fixDetailRowHeight', index);
+                    disableform(model + "_df");
+                }
+            });
+            $(grid).datagrid('fixDetailRowHeight', index);
+            this.expandrow = index;
+        },
+        onCollapseRow: function (index, row) {
+            if (this.expandrow == index) {
+                this.expandrow = -1;
+                $("#" + model + "_df").parent().remove();
+            }
+        }
+    });
+}
 function disableform(formid) {
     var field = $("#" + formid).find('span input[disabled]');
     field.addClass('textbox-text-disabled');

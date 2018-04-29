@@ -1,176 +1,95 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<div class="easyui-layout" data-options="fit:true">
-	<div class="rjhc-panel-north" data-options="region:'north'">
-		<div class="easyui-panel rjhc-panel-inner">
-			<form id="org_af" class="easyui-form"
-				data-options="url:'user',method:'post'">
-				<table cellspacing="0" class="rjhc-table-dialog">
+<%@ page language="java" pageEncoding="UTF-8"%>
+<%
+	String path = request.getContextPath();
+	String a = (String) request.getAttribute("a");
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<base href="<%=basePath%>">
+<title>征信查询管理系统</title>
+</head>
+<body>
+	<div class="easyui-layout" data-options="fit:true">
+		<div data-options="region:'center'" style="padding: 5px; border: none">
+			<form id="archive_af" class="easyui-form" method="post"
+				enctype="multipart/form-data" action='archive'
+				data-options="url:'archive',method:'post'">
+				<!-- 隐藏字段:机构、角色、-->
+				<input type="hidden" id="roles" name="roles" />
+				<table cellspacing="4" width="100%" class="rjhc-table-panel">
 					<tr>
-						<td>所属部门:</td>
-						<td><input class="easyui-textbox" type="text" name="orgName"
-							data-options="required:true,validType:['name','stringLength[1,80]'],invalidMessage:'机构名称只能包含英文、数字、中文或.特殊符号且长度不超过80'" />
+						<td>
+							<fieldset style="border: 1px solid #95B8E7;">
+								<legend>用户信息</legend>
+								<table cellspacing="4" width="100%" class="rjhc-table-panel">
+									<tr>
+										<td>机构部门:</td>
+										<td><select class="easyui-combotree " name="orgCode"
+											id="_orgCode"
+											data-options="width:150,required:true,url:'org/userOrgTree',panelWidth:300">
+										</select></td>
+									</tr>
+									<tr>
+										<td>登录名:</td>
+										<td class="firstval"><input class="easyui-textbox "
+											type="text" name="userId"
+											data-options="width:150,required:true,validType:['stringLength[1,20]'],missingMessage:'登录名为必填项'" />
+										</td>
+									</tr>
+									<tr>
+										<td>用户名:</td>
+										<td class="firstval"><input class="easyui-textbox "
+											type="text" name="userName"
+											data-options="width:150,required:true,validType:['stringLength[1,20]'],missingMessage:'用户名为必填项'" />
+										</td>
+									</tr>
+									<tr>
+										<td>电子邮件:</td>
+										<td class="firstval"><input class="easyui-textbox "
+											type="text" name="email"
+											data-options="width:150,validType:['stringLength[1,20]']" />
+										</td>
+									</tr>
+									<tr>
+										<td>电话号码:</td>
+										<td class="firstval"><input class="easyui-textbox "
+											type="text" name="telephone"
+											data-options="width:150,validType:['stringLength[1,20]']" />
+										</td>
+									</tr>
+								</table>
+							</fieldset>
 						</td>
 					</tr>
-					
-					
-									<th class="applytd">所属部门：<font color="#FF0000"> *</font></th>
-				<td class="applytdnotcolor" style="width: 80%; height: 32px">${department.deptName}</td>
-
-
-
-
 				</table>
 			</form>
 		</div>
-	</div>
-</div>
-
-
-
-
-
-	<div class="ftitle">用户信息</div>
-	<form id="personForm" method="post">
-		<table class="applytable" cellspacing="0" cellpadding="8"
-			style="width: 650px" align="center">
-			<tr style="display: none">
-				<th>隐藏字段：</th>
-				<td>所属部门ID：<input name="person.department.deptId"
-					value="${person.department.deptId}"> 用户ID:<input
-					name="person.personId" value="${person.personId}"
-					id="person.personId">
-				</td>
-			</tr>
-			<tr>
-				<th class="applytd">所属部门：<font color="#FF0000"> *</font></th>
-				<td class="applytdnotcolor" style="width: 80%; height: 32px">${department.deptName}</td>
-			</tr>
-			<tr>
-				<th class="applytd">登录名：<font color="#FF0000"> *</font></th>
-				<td class="applytdnotcolor" style="width: 80%; height: 32px"><input
-					class="easyui-textbox" type="text"
-					name="person.userAccount.loginName" id="loginName"
-					value="${person.userAccount.loginName}"
-					data-options="prompt:'输入登陆名...',required:true,validType:['length[1,20]']"
-					style="width: 100%; height: 32px" /></td>
-			</tr>
-			<tr>
-				<th class="applytd">姓名：<font color="#FF0000"> *</font></th>
-				<td class="applytdnotcolor" style="width: 80%; height: 32px"><input
-					class="easyui-textbox" name="person.userAccount.userName"
-					id="userName" value="${person.userAccount.userName}"
-					data-options="prompt:'输入姓名...',required:true,validType:['length[1,20]']"
-					style="width: 100%; height: 32px" /></td>
-			</tr>
-			<tr>
-				<th class="applytd">人员序号：<font color="#FF0000"> *</font></th>
-				<td class="applytdnotcolor" style="width: 80%; height: 32px"><input
-					class="easyui-textbox"
-					data-options="prompt:'输入人员序号...',required:true,validType:['length[1,20]']"
-					style="width: 100%; height: 32px" name="person.personOrder"
-					id="personOrder" value="${person.personOrder}" /></td>
-			</tr>
-			<tr>
-				<th class="applytd">电子邮件：&nbsp&nbsp&nbsp</th>
-				<td class="applytdnotcolor" style="width: 80%; height: 32px"><input
-					class="easyui-textbox"
-					data-options="prompt:'输入电子邮件...',validType:['email','length[1,20]']"
-					style="width: 100%; height: 32px" name="person.email"
-					id="personEmail" value="${person.email}" /></td>
-			</tr>
-			<tr>
-				<th class="applytd">电话号码：&nbsp&nbsp&nbsp</th>
-				<td class="applytdnotcolor" style="width: 80%; height: 32px"><input
-					class="easyui-textbox"
-					data-options="prompt:'输入电话号码...',validType:['length[1,10]']"
-					style="width: 100%; height: 32px" name="person.mobileNumber"
-					id="mobileNumber" value="${person.mobileNumber}" /></td>
-			</tr>
-			<tr>
-				<c:choose>
-					<c:when test="${ismod==0}">
-						<th class="applytd">用户角色：</th>
-						<td colspan="3" style="color: #7b7b7b" class="applytdnotcolor">
-							<table style="width: 80%">
-								<tr style="width: 80%">
-									<td width="50%">
-										<table style="width: 100%; text-align: left;">
-											<c:forEach items="${roleList}" var="role" begin="0" step="2">
-												<tr>
-													<td><input type="checkbox" name="ids"
-														id="${role.roleId}" value="${role.roleId}" />${role.roleName}</td>
-												</tr>
-											</c:forEach>
-										</table>
-									</td>
-									<td width="50%">
-										<table style="width: 100%; text-align: left;">
-											<c:forEach items="${roleList}" var="role" begin="1" step="2">
-												<tr>
-													<td><input type="checkbox" name="ids"
-														id="${role.roleId}" value="${role.roleId}" />${role.roleName}</td>
-												</tr>
-											</c:forEach>
-										</table>
-									</td>
-								</tr>
-							</table>
-						</td>
-					</c:when>
-					<c:otherwise>
-						<th class="applytd">用户角色：</th>
-						<td colspan="3" style="color: #7b7b7b" class="applytdnotcolor">
-							<table style="width: 80%">
-								<tr style="width: 80%">
-									<td width="50%">
-										<table style="width: 100%; text-align: left;">
-											<c:forEach items="${roleList}" var="role" begin="0" step="2">
-												<tr>
-													<td><input type="checkbox" name="ids"
-														id="${role.roleId}" value="${role.roleId}" />${role.roleName}</td>
-												</tr>
-											</c:forEach>
-										</table>
-									</td>
-									<td width="50%">
-										<table style="width: 100%; text-align: left;">
-											<c:forEach items="${roleList}" var="role" begin="1" step="2">
-												<tr>
-													<td><input type="checkbox" name="ids"
-														id="${role.roleId}" value="${role.roleId}" />${role.roleName}</td>
-												</tr>
-											</c:forEach>
-											<tr>
-												<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-											</tr>
-										</table>
-									</td>
-								</tr>
-							</table>
-						</td>
-					</c:otherwise>
-				</c:choose>
-
-			</tr>
-		</table>
-	</form>
-	<div style="text-align: center; padding: 25px">
-		<a href="javascript:void(0)" class="easyui-linkbutton"
-			data-options="iconCls:'icon-save'" onclick="Person.submit()">保存</a> <a
-			class="easyui-linkbutton" data-options="iconCls:'icon-cancel'"
-			href="javascript:void(0)"
-			onclick="javascript:$('#user_addwin').window('close');">取消</a>
+		<div class="rjhc-panel-center" data-options="region:'center'">
+			<div class="easyui-panel rjhc-panel-inner"
+				data-options="title:'可分配角色列表',fit:true">
+				<ul id="userroletree"></ul>
+			</div>
+		</div>
+		<div class="rjhc-panel-south" data-options="region:'south'">
+			<a class="easyui-linkbutton " data-options="iconCls:'icon-add'"
+				href="javascript:void(0)" onclick="javascript:save('user','用户')">新增</a>
+			<a class="easyui-linkbutton " data-options="iconCls:'icon-cancel'"
+				href="javascript:void(0)"
+				onclick="javascript:$('#user_addwin').window('close');">取消</a>
+		</div>
 	</div>
 	<script type="text/javascript">
-	if("${ids}"!=null){
-		<c:forEach items="${roleList }" var="role">
-			<c:forEach items="${ids }" var="id">
-				if("${id}"=="${role.roleId }"){
-					$('#${role.roleId}').attr("checked","checked");
-				}
-			</c:forEach>
-		</c:forEach>
-	}
-</script>
+	// 初始化角色列表
+	$(function(){
+	    $('#userroletree').tree({
+	        checkbox: true,
+	        url: 'org/orgroletree/',
+	        cascadeCheck: false
+	    });
+	});
+	</script>
+</body>
+</html>

@@ -34,13 +34,19 @@ import com.platform.application.sysmanage.user.service.TmUserService;
 public class TmUserServiceImpl extends AbstractService implements TmUserService {
 
 	private static final Logger LOGGER = Logger.getLogger(TmUserServiceImpl.class);
-
+	/**
+	 * 加密服务类
+	 */
 	@Autowired
 	private PasswordEncoder encoder;
-
+	/**
+	 * 缓存工厂类
+	 */
 	@Autowired
 	private CacheProxyFactory cacheProxyFactory;
-
+	/**
+	 * 默认密码
+	 */
 	@Value("${INIT_PWD}")
 	private String defaultPwd;
 	/**
@@ -246,8 +252,13 @@ public class TmUserServiceImpl extends AbstractService implements TmUserService 
 		}
 		return criteria;
 	}
-	@SuppressWarnings("unchecked")
+	/**
+	 * 根据条件查找用户信息
+	 * @param userDto 用户交互类
+	 * @param loginInfo 登录用户信息
+	 */
 	@Override
+	@SuppressWarnings("unchecked")
 	public PageResponse<UserDto> findByDto(final UserDto userDto,final LoginInfo loginInfo) {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("开始查询用户信息,条件[" + userDto + "]");
