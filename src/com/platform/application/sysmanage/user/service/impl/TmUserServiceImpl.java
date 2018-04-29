@@ -9,6 +9,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.platform.application.common.cache.CacheProxyFactory;
+import com.platform.application.common.dto.PageResponse;
 import com.platform.application.sysmanage.org.OrgDto;
 import com.platform.application.sysmanage.org.cache.TmOrgCache;
 import com.platform.application.sysmanage.role.bean.TmRole;
@@ -24,6 +27,7 @@ import com.platform.application.sysmanage.service.AbstractService;
 import com.platform.application.sysmanage.user.UserDto;
 import com.platform.application.sysmanage.user.bean.TmUser;
 import com.platform.application.sysmanage.user.service.TmUserService;
+import com.platform.application.utils.CacheConverterUtils;
 
 @Service
 @Transactional
@@ -272,5 +276,87 @@ public class TmUserServiceImpl extends AbstractService implements TmUserService 
 			criteria.add(Restrictions.eq("roles", dto.getRoles()));
 		}
 		return criteria;
+	}
+
+	@Override
+	public PageResponse<UserDto> findByDto(final UserDto userDto, final String orgCode) {
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("开始查询用户信息,条件[" + userDto + "]");
+		}
+		try {
+			final Criteria criteria = sessionFactory.getCurrentSession().createCriteria(TmUser.class);
+			if (StringUtils.isNotBlank(userDto.getUserId())) {
+				criteria.add(Restrictions.like("userId", "%" + userDto.getUserId() + "%"));
+			}
+			if (StringUtils.isNotBlank(userDto.getOrgCode())) {
+				criteria.add(Restrictions.eq("orgCode", userDto.getOrgCode()));
+			}
+			if (StringUtils.isNotBlank(userDto.getName())) {
+				criteria.add(Restrictions.like("name", "%" + userDto.getName() + "%"));
+			}
+			if (StringUtils.isNotBlank(userDto.getType())) {
+				criteria.add(Restrictions.eq("type", userDto.getType()));
+			}
+			if (StringUtils.isNotBlank(userDto.getUserPwd())) {
+				criteria.add(Restrictions.eq("userPwd", userDto.getUserPwd()));
+			}
+			if (StringUtils.isNotBlank(userDto.getTelephone())) {
+				criteria.add(Restrictions.eq("telephone", userDto.getTelephone()));
+			}
+			if (StringUtils.isNotBlank(userDto.getEmail())) {
+				criteria.add(Restrictions.eq("email", userDto.getEmail()));
+			}
+			if (StringUtils.isNotBlank(userDto.getUserDesc())) {
+				criteria.add(Restrictions.eq("userDesc", userDto.getUserDesc()));
+			}
+			if (userDto.getLastLogonTime() != null) {
+				criteria.add(Restrictions.eq("lastLogonTime", userDto.getLastLogonTime()));
+			}
+			if (StringUtils.isNotBlank(userDto.getStatus())) {
+				criteria.add(Restrictions.eq("status", userDto.getStatus()));
+			}
+			if (userDto.getQueryStartTime() != null) {
+				criteria.add(Restrictions.ge("createTime", userDto.getQueryStartTime()));
+			}
+			if (userDto.getQueryEndTime() != null) {
+				criteria.add(Restrictions.le("createTime", userDto.getQueryEndTime()));
+			}
+			if (StringUtils.isNotBlank(userDto.getCreator())) {
+				criteria.add(Restrictions.eq("creator", userDto.getCreator()));
+			}
+			if (userDto.getCreateTime() != null) {
+				criteria.add(Restrictions.eq("createTime", userDto.getCreateTime()));
+			}
+			if (StringUtils.isNotBlank(orgCode)) {
+				criteria.add(Restrictions.in("orgCode",
+						CacheConverterUtils.getBranchAndSelf(cacheProxyFactory, orgCode)));
+			}
+			final int count = ((Long) criteria.setProjection(Projections.rowCount()).uniqueResult()).intValue();
+			int page = userDto.getPage();
+			if (page < 1) {
+				page = 1;
+			}
+			int rows = userDto.getRows();
+			if (rows < 1) {
+				rows = this.pageSize;
+			}
+			criteria.setProjection(null);
+			final List<TmUser> results = criteria.setFirstResult((page - 1) * rows).setMaxResults(rows)
+					.addOrder(Order.desc("createTime")).list();
+			final List<UserDto> dtos = new ArrayList<UserDto>();
+			for (final TmUser u : results) {
+				OrgDto org = cacheProxyFactory.getCacheValue(TmOrgCache.class, u.getOrgCode());
+				final UserDto dto = u.convertDto();
+				dto.setOrgName(org.getOrgName());
+				dtos.add(dto);
+			}
+			if (LOGGER.isDebugEnabled()) {
+				LOGGER.debug("查询用户信息成功,条件[" + results + "]");
+			}
+			return new PageResponse<UserDto>(true, count, page, rows, dtos);
+		} catch (final RuntimeException re) {
+			LOGGER.error("查询用户信息失败,条件[" + userDto + "]:" + re.getMessage(), re);
+			return new PageResponse<UserDto>(false, "查询用户信息失败!");
+		}
 	}
 }

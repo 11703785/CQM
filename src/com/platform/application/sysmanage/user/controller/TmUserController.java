@@ -1,23 +1,24 @@
 package com.platform.application.sysmanage.user.controller;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.platform.application.common.dto.PageResponse;
 import com.platform.application.common.dto.ResultResponse;
-import com.platform.application.sysmanage.domain.Department;
-import com.platform.application.sysmanage.service.DepartmentService;
+import com.platform.application.sysmanage.login.LoginInfo;
 import com.platform.application.sysmanage.user.UserDto;
 import com.platform.application.sysmanage.user.service.TmUserService;
 import com.platform.application.utils.MediaTypeUtils;
@@ -41,11 +42,6 @@ public class TmUserController extends BaseAction {
 	@Autowired
 	private TmUserService tmUserService;
 	/**
-	 * 机构信息服务类
-	 */
-	@Autowired
-	private DepartmentService departmentService;
-	/**
 	 * 获取主界面.
 	 *
 	 * @return 主界面
@@ -53,8 +49,8 @@ public class TmUserController extends BaseAction {
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public ModelAndView getUserHome() {
 		ModelAndView mav = new ModelAndView("sysmanage/user/show");
-//		Department department = (Department)departmentService.load(person.getDepartment().getDeptId());
-//		mav.addObject("department", department);
+		//		Department department = (Department)departmentService.load(person.getDepartment().getDeptId());
+		//		mav.addObject("department", department);
 		return mav;
 	}
 	/**
@@ -65,10 +61,10 @@ public class TmUserController extends BaseAction {
 	@RequestMapping(value = "/showadd", method = RequestMethod.GET)
 	public ModelAndView getUserAdd() {
 		final ModelAndView mv = new ModelAndView("sysmanage/user/add");
-		
+
 		return mv;
 	}
-	
+
 	/**
 	 * 新增用户
 	 * @param userDto 用户交互对象
@@ -97,9 +93,57 @@ public class TmUserController extends BaseAction {
 			return new ResultResponse<UserDto>(false, "新增失败！");
 		}
 	}
-	
-	
-	
-	
-	
+
+	/**
+	 * 分页查询列表信息.
+	 *
+	 * @param dto
+	 *            查询条件
+	 * @param session
+	 *            HttpSession
+	 * @return PageResponse<TmUserDto>
+	 */
+	@RequestMapping(value = "/find", method = RequestMethod.POST, produces = { MediaTypeUtils.UTF_8 })
+	public PageResponse<UserDto> findByDto(@RequestBody final UserDto dto, final HttpSession session) {
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("POST /user/find [" + dto + "]");
+		}
+		try {
+			// 当起始日或结束日不为空时判断是否晚于当日
+			if (null != dto.getQueryStartTime() && dto.getQueryStartTime().after(new Date())) {
+				throw new Exception("创建起始日不能早于查询当日");
+			}
+			if (null != dto.getQueryEndTime() && dto.getQueryEndTime().after(new Date())) {
+				throw new Exception("创建结束日不能早于查询当日");
+			}
+			// 创建起始日与结束日都不为空时判断创建起始日是否晚于创建结束日
+			if (null != dto.getQueryStartTime() && null != dto.getQueryEndTime()) {
+				if (dto.getQueryStartTime().after(dto.getQueryEndTime())) {
+					throw new Exception("创建起始日不能晚于创建结束日");
+				}
+			}
+			// 创建结束日存在时加一天
+			if (null != dto.getQueryEndTime()) {
+				final Calendar calendar = Calendar.getInstance();
+				calendar.setTime(dto.getQueryEndTime());
+				calendar.add(Calendar.DATE, 1);
+				dto.setQueryEndTime(calendar.getTime());
+			}
+			final LoginInfo loginInfo = (LoginInfo) session.getAttribute(LoginInfo.HTTP_SESSION_LOGININFO);
+			final PageResponse<UserDto> results = tmUserService.findByDto(dto, loginInfo.getOrgCode());
+			if (LOGGER.isDebugEnabled()) {
+				if (results.isStatus()) {
+					LOGGER.debug("POST /user/find 查询成功[" + dto + "]");
+				} else {
+					LOGGER.debug("POST /user/find 查询失败[" + results.getError() + "]");
+				}
+			}
+			return results;
+		} catch (final Exception re) {
+			LOGGER.error("POST /user/find [" + dto + "]:查询失败!", re);
+			return new PageResponse<UserDto>(false, re.getMessage());
+		}
+	}
+
+
 }

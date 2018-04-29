@@ -1,10 +1,14 @@
 package com.platform.application.utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.platform.application.common.cache.CacheProxyFactory;
+import com.platform.application.sysmanage.datadic.TdDataDicDto;
+import com.platform.application.sysmanage.datadic.cache.TdDataDicCache;
 import com.platform.application.sysmanage.org.cache.TmOrgRelaCache;
 
 /**
@@ -39,13 +43,13 @@ public final class CacheConverterUtils {
 	 * @param key               数据字典键
 	 * @return 数据字典值
 	 */
-	/*public static String getDataDicValue(
+	public static String getDataDicValue(
 			final CacheProxyFactory cacheProxyFactory,
 			final String type,
 			final String key) {
 		Map<String, String> dics = getDataDic(cacheProxyFactory, type);
 		return dics.get(key);
-	}*/
+	}
 
 	/**
 	 * 从缓存中获取数据字典集合.
@@ -54,21 +58,21 @@ public final class CacheConverterUtils {
 	 * @param type              数据字典类型
 	 * @return 数据字典集合
 	 */
-	/*public static Map<String, String> getDataDic(
+	public static Map<String, String> getDataDic(
 			final CacheProxyFactory cacheProxyFactory,
 			final String type) {
-		Set<DataDicDto> dtos = cacheProxyFactory
-				.getCacheValue(DataDicCache.class, type);
+		Set<TdDataDicDto> dtos = cacheProxyFactory
+				.getCacheValue(TdDataDicCache.class, type);
 		if (dtos == null) {
 			return null;
 		} else {
 			Map<String, String> dic = new HashMap<String, String>();
-			for (DataDicDto dto : dtos) {
+			for (TdDataDicDto dto : dtos) {
 				dic.put(dto.getCode(), dto.getName());
 			}
 			return dic;
 		}
-	}*/
+	}
 
 	/**
 	 * 从缓存中获取机构及其所辖机构列表.

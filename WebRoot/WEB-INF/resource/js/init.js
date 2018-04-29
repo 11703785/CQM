@@ -1,6 +1,7 @@
 var appDicMap;
 var appDicKey = {
-    cerType: '1',
+	userStatus: '31'
+    /*cerType: '1',
     archiveType: '2',
     archiveStatus: '3',
     queryReason: '7',
@@ -27,7 +28,7 @@ var appDicKey = {
     ecQueryStatus: '54',
     alarmType: '944',
     profileType:'947',
-    filesType:'950',
+    filesType:'950',*/
 };
 $.ajax({
     url: 'index/navigation',
@@ -50,17 +51,17 @@ $.ajax({
                     value.children,
                     function (n, value) {
 	                        menu = menu
-	                            + "<li><i class='" + value.iconCls + "'></i><a href='#' onclick='$.insdep.control(\""
+	                            + "<li><i class='" + value.iconCls + "'></i><a href='#' onclick='insdepControl(\""
 	                            + value.href
-	                            + "\",\"\",\"<b>"
+	                            /*+ "\",\"\",\"<b>"
 	                            + value.text
 	                            + "</b><span>"
 	                            + text
-	                            + "</span>\"";
+	                            + "</span>\"";*/
 	                        if (value.iframe === true) {
 	                            menu = menu +",true";
 	                        }
-	                        menu = menu + ")'> "
+	                        menu = menu + "\");'> "
 	                            + value.text
 	                            + "</a></li>";
                     });
@@ -68,7 +69,6 @@ $.ajax({
                 /*$("#rjhcmean_mini").append(
                     "<li><i class='" + value.iconCls + "'></i><p>"
                     + value.text + "</p></li>");*/
-
             });
         $("#rjhcmean").append(menu);
 
@@ -77,3 +77,7 @@ $.ajax({
         $.messager.alert("", textStatus || errorThrown, "error");
     }
 });
+
+function insdepControl(url){
+	$('#content').panel("refresh", url);
+}

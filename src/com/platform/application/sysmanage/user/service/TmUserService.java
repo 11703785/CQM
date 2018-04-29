@@ -2,6 +2,7 @@ package com.platform.application.sysmanage.user.service;
 
 import java.util.List;
 
+import com.platform.application.common.dto.PageResponse;
 import com.platform.application.sysmanage.user.UserDto;
 import com.platform.application.sysmanage.user.bean.TmUser;
 
@@ -51,4 +52,15 @@ public interface TmUserService {
 	 * @return 修改后用户交互实体对象
 	 */
 	public UserDto updateRole(final UserDto dto);
+
+	/**
+	 * 根据条件查询用户信息.
+	 *
+	 * @param userDto
+	 *            用户交互对象
+	 * @param loginOrgCode
+	 *            当前登陆用户信息
+	 * @return 当前页用户信息列表
+	 */
+	public PageResponse<UserDto> findByDto(UserDto dto, String orgCode);
 }

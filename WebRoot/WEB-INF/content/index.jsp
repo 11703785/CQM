@@ -13,6 +13,7 @@
 <link rel="stylesheet" type="text/css" href="skin/demo.css"/>
 <script type="text/javascript" src="resource/js/jquery-1.8.0.min.js"></script>
 <script type="text/javascript" src="resource/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="resource/js/datagrid-detailview.js"></script>
 <script type="text/javascript" src="resource/easyui/locale/easyui-lang-zh_CN.js"></script>
 <link rel="icon" href="skin/favicon.ico" type="image/x-icon" />
 <link rel="stylesheet" type="text/css" href="skin/top.css" />
@@ -25,7 +26,7 @@
 <script language="javascript" src="resource/js/sysmanage.js"></script>
 <script language="javascript" src="resource/js/monitor.js"></script>
 <script language="javascript" src="resource/js/dictionary.js"></script>
-
+<script type="text/javascript" src="resource/js/query.js"></script>
 <style type="text/css">
 
 .tab_content {padding-top:2px;background-color:#f5f5f5;}
@@ -90,4 +91,20 @@
 	</div>
 </body>
 <script type="text/javascript" src="resource/js/init.js"></script>
+<script>
+	$(function () {
+		$.ajax({
+            url: 'profile/datadic',
+            dataType: "JSON",
+            async: false,
+            cache: false,
+            success: function (resp) {
+                appDicMap = resp;
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                $.messager.alert("", textStatus || errorThrown, "error");
+            }
+        });
+	});
+</script>
 </html>
