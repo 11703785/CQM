@@ -1,4 +1,4 @@
-var sugar = sugar || {};
+var rjhc = rjhc || {};
 $.ajaxSetup({
     contentType: 'application/json'
 });
@@ -8,7 +8,7 @@ $.ajaxSetup({
  * @param options
  * @returns
  */
-sugar.showDialog = function (options) {
+rjhc.showDialog = function (options) {
     var dialog = $("<div/>").appendTo("body").attr("id", options.id);
     $(dialog).data("key", options);
     var cfg = {
@@ -31,7 +31,7 @@ sugar.showDialog = function (options) {
     $(dialog).window(cfg);
     return $(dialog);
 };
-sugar.convert = function (data) {
+rjhc.convert = function (data) {
     return (new Function("return " + data))();
 };
 /**
@@ -331,7 +331,7 @@ function changeTheme(themeName) {/* 更换主题 */
     });
 }
 function changepwd() {
-    new sugar.showDialog({
+    new rjhc.showDialog({
         id: 'changepwd_newwin',
         modal: true,
         closed: true,
