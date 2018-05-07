@@ -125,6 +125,9 @@ public class TmOrgSerivceImpl extends AbstractService implements TmOrgService {
 			}
 			org.setAreaCode(dto.getAreaCode());
 			org.setOrgName(dto.getOrgName());
+			org.setPcOrgCode(dto.getPcOrgCode());
+			org.setEcOrgCode(dto.getEcOrgCode());
+			org.setOrgType(dto.getOrgType());
 			org.setRemark(dto.getRemark());
 			session.update(org);
 			if (LOGGER.isDebugEnabled()) {

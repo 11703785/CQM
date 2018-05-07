@@ -188,6 +188,8 @@ function creategrid(model, idField, singleSelect) {
     }
     var formObj = $("#" + model + "_qf");
     if (formObj != null) {
+    	
+    	
         formObj.form('clear');
     }
     $("#" + model + "_dg").datagrid({
