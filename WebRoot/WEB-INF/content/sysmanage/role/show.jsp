@@ -3,7 +3,6 @@
 <%
     LoginInfo loginInfo = (LoginInfo) request.getSession().getAttribute(LoginInfo.HTTP_SESSION_LOGININFO);
 %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div class="easyui-layout" style="width: 100%;height:100%">
 	<div data-options="region:'center'" title="角色管理" id="roleContent" split="true">
 	    <div id="role_tb" style="padding:0px;height:auto">
