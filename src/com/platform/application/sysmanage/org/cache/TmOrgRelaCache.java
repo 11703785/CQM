@@ -16,11 +16,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.platform.application.common.cache.ICacheProxy;
 import com.platform.application.common.cache.annotation.CacheComponent;
-import com.platform.application.sysmanage.org.OrgService;
 import com.platform.application.sysmanage.org.bean.TmOrgRela;
+import com.platform.application.sysmanage.org.service.TmOrgService;
 
 /**
- * 机构关系缓存类.
+ * 机构关系缓存类 .
  *
  */
 @CacheComponent
@@ -38,10 +38,10 @@ public class TmOrgRelaCache implements ICacheProxy<Set<String>> {
 	 */
 	private static final String ORG_ROOT_NODE = "ORG_ROOT_NODE";
 	/**
-	 * 机构管理服务类.
+	 * 机构管理服务类 .
 	 */
 	@Autowired
-	private OrgService orgService;
+	private TmOrgService orgService;
 
 	@Override
 	public Set<String> getCacheValue(final String key) {
@@ -49,17 +49,14 @@ public class TmOrgRelaCache implements ICacheProxy<Set<String>> {
 	}
 
 	@Override
-	@Cacheable(value = PROFILE_CACHE_NAME,
-	key = "'" + ORG_RELATION_CACHE_NAME_PRE + "'",
-	unless = "#result == null ")
+	@Cacheable(value = PROFILE_CACHE_NAME, key = "'" + ORG_RELATION_CACHE_NAME_PRE + "'", unless = "#result == null ")
 	@Transactional(readOnly = true)
 	public Map<String, Set<String>> getCacheAllValue() {
 		if (LOGGER.isTraceEnabled()) {
 			LOGGER.trace("获取机构上下级关系");
 		}
 		final List<TmOrgRela> upOrgs = orgService.selOrgAndUpOrg();
-		final TreeMap<String, Set<String>> orgTree =
-				new TreeMap<String, Set<String>>();
+		final TreeMap<String, Set<String>> orgTree = new TreeMap<String, Set<String>>();
 		orgTree.put(ORG_ROOT_NODE, new HashSet<String>(0));
 		for (TmOrgRela rela : upOrgs) {
 			if (!orgTree.containsKey(rela.getOrgCode())) {

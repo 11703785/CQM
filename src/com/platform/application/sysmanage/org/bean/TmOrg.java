@@ -16,7 +16,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.platform.application.sysmanage.org.OrgDto;
+import com.platform.application.sysmanage.org.TmOrgDto;
 import com.platform.application.sysmanage.role.bean.TmRole;
 
 @Entity
@@ -52,6 +52,11 @@ public class TmOrg implements Serializable {
 	 * 机构状态.
 	 */
 	private String status;
+
+	/**
+	 * 机构类型.
+	 */
+	private String orgType;
 
 	/**
 	 * 所在地区.
@@ -193,6 +198,24 @@ public class TmOrg implements Serializable {
 		this.status = statusVal;
 	}
 
+
+	/**
+	 * 获取机构类型.
+	 * @return 机构类型
+	 */
+	@Column(name = "ORGTYPE", nullable = false)
+	public String getOrgType() {
+		return orgType;
+	}
+
+	/**
+	 * 设置机构类型.
+	 * @param orgType
+	 */
+	public void setOrgType(final String orgType) {
+		this.orgType = orgType;
+	}
+
 	/**
 	 * 获取所在地区.
 	 *
@@ -316,6 +339,7 @@ public class TmOrg implements Serializable {
 		buffer.append("ecOrgCode").append("='").append(getEcOrgCode())
 		.append("' ");
 		buffer.append("status").append("='").append(getStatus()).append("' ");
+		buffer.append("orgType").append("='").append(getOrgType()).append("' ");
 		buffer.append("areaCode").append("='").append(getAreaCode())
 		.append("' ");
 		buffer.append("remark").append("='").append(getRemark()).append("' ");
@@ -331,14 +355,15 @@ public class TmOrg implements Serializable {
 	 *
 	 * @return 机构交互对象
 	 */
-	public OrgDto convertDto() {
-		final OrgDto dto = new OrgDto();
+	public TmOrgDto convertDto() {
+		final TmOrgDto dto = new TmOrgDto();
 		dto.setOrgCode(this.orgCode);
 		dto.setOrgName(this.orgName);
 		dto.setUpOrg(this.upOrg);
 		dto.setPcOrgCode(this.pcOrgCode);
 		dto.setEcOrgCode(this.ecOrgCode);
 		dto.setStatus(this.status);
+		dto.setOrgType(orgType);
 		dto.setAreaCode(this.areaCode);
 		dto.setRemark(this.remark);
 		dto.setCreator(this.creator);
@@ -351,8 +376,8 @@ public class TmOrg implements Serializable {
 	 *
 	 * @return 机构交互对象
 	 */
-	public OrgDto cascadeDto() {
-		final OrgDto dto = convertDto();
+	public TmOrgDto cascadeDto() {
+		final TmOrgDto dto = convertDto();
 		final Set<String> roles = new HashSet<String>(0);
 		for (final TmRole role : this.roleEntities) {
 			roles.add(role.getRoleCode());

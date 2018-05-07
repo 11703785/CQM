@@ -14,7 +14,7 @@ import com.platform.application.common.dto.AbstractDto;
 import com.platform.application.sysmanage.org.bean.TmOrg;
 
 @SuppressWarnings("serial")
-public class OrgDto extends AbstractDto {
+public class TmOrgDto extends AbstractDto {
 	/**
 	 * 机构代码.
 	 */
@@ -48,6 +48,11 @@ public class OrgDto extends AbstractDto {
 	 * 机构状态.
 	 */
 	private String status;
+
+	/**
+	 * 机构类型.
+	 */
+	private String orgType;
 
 	/**
 	 * 所在地区.
@@ -199,6 +204,22 @@ public class OrgDto extends AbstractDto {
 	 */
 	public void setStatus(final String statusVal) {
 		this.status = statusVal;
+	}
+
+	/**
+	 * 获取机构类型.
+	 * @return 机构类型
+	 */
+	public String getOrgType() {
+		return orgType;
+	}
+
+	/**
+	 * 设置机构类型.
+	 * @param orgType
+	 */
+	public void setOrgType(final String orgType) {
+		this.orgType = orgType;
 	}
 
 	/**
@@ -361,6 +382,7 @@ public class OrgDto extends AbstractDto {
 		buffer.append("ecOrgCode").append("='").append(getEcOrgCode())
 		.append("' ");
 		buffer.append("status").append("='").append(getStatus()).append("' ");
+		buffer.append("orgType").append("='").append(getOrgType()).append("' ");
 		buffer.append("areaCode").append("='").append(getAreaCode())
 		.append("' ");
 		buffer.append("remark").append("='").append(getRemark()).append("' ");
@@ -384,6 +406,7 @@ public class OrgDto extends AbstractDto {
 		entity.setPcOrgCode(this.pcOrgCode);
 		entity.setEcOrgCode(this.ecOrgCode);
 		entity.setStatus(this.status);
+		entity.setOrgType(orgType);
 		entity.setAreaCode(this.areaCode);
 		entity.setRemark(this.remark);
 		entity.setCreator(this.creator);

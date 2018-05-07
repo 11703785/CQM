@@ -11,14 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.platform.application.common.cache.ICacheProxy;
 import com.platform.application.common.cache.annotation.CacheComponent;
-import com.platform.application.sysmanage.org.OrgDto;
-import com.platform.application.sysmanage.org.OrgService;
+import com.platform.application.sysmanage.org.TmOrgDto;
+import com.platform.application.sysmanage.org.service.TmOrgService;
 
 /**
  * 机构缓存类.
  */
 @CacheComponent
-public class TmOrgCache implements ICacheProxy<OrgDto> {
+public class TmOrgCache implements ICacheProxy<TmOrgDto> {
 	/**
 	 * 日志记录器.
 	 */
@@ -29,21 +29,19 @@ public class TmOrgCache implements ICacheProxy<OrgDto> {
 	public static final String ORG_CACHE_NAME_PRE = "orginfo_";
 
 	/**
-	 * 机构管理服务类.
+	 * 机构管理服务类 .
 	 */
 	@Autowired
-	private OrgService orgService;
+	private TmOrgService orgService;
 
 	@Override
-	@Cacheable(value = PROFILE_CACHE_NAME,
-	key = "'" + ORG_CACHE_NAME_PRE + "'" + "+#key",
-	unless = "#result == null ")
+	@Cacheable(value = PROFILE_CACHE_NAME, key = "'" + ORG_CACHE_NAME_PRE + "'" + "+#key", unless = "#result == null ")
 	@Transactional(readOnly = true)
-	public OrgDto getCacheValue(final String key) {
+	public TmOrgDto getCacheValue(final String key) {
 		if (LOGGER.isTraceEnabled()) {
 			LOGGER.trace("开始获取机构信息[" + key + "]");
 		}
-		OrgDto dto = orgService.findById(key);
+		TmOrgDto dto = orgService.findById(key);
 		if (LOGGER.isTraceEnabled()) {
 			LOGGER.trace("获取机构成功[" + dto + "]");
 		}
@@ -51,13 +49,12 @@ public class TmOrgCache implements ICacheProxy<OrgDto> {
 	}
 
 	@Override
-	public Map<String, OrgDto> getCacheAllValue() {
+	public Map<String, TmOrgDto> getCacheAllValue() {
 		throw new RuntimeException("方法调用错误");
 	}
 
 	@Override
-	@CacheEvict(value = PROFILE_CACHE_NAME,
-	key = "'" + ORG_CACHE_NAME_PRE + "'" + "+#key")
+	@CacheEvict(value = PROFILE_CACHE_NAME, key = "'" + ORG_CACHE_NAME_PRE + "'" + "+#key")
 	public void evictCacheValue(final String key) {
 		if (LOGGER.isTraceEnabled()) {
 			LOGGER.trace("清除机构信息[" + key + "]");

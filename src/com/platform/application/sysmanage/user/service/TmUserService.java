@@ -1,7 +1,5 @@
 package com.platform.application.sysmanage.user.service;
 
-import java.util.List;
-
 import com.platform.application.common.dto.PageResponse;
 import com.platform.application.sysmanage.login.LoginInfo;
 import com.platform.application.sysmanage.user.UserDto;
@@ -16,10 +14,10 @@ public interface TmUserService {
 	public UserDto persist(TmUser tmUser);
 	/**
 	 * 更新用户信息
-	 * @param tranInst 用户实体类对象
+	 * @param instance 用户交互实体对象
 	 * @return 更新后交互对象
 	 */
-	public UserDto update(final TmUser tranInst);
+	public UserDto update(final UserDto instance) throws Exception;
 	/**
 	 * 删除用户信息
 	 * @param tranInst 用户实体类对象

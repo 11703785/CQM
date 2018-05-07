@@ -1,22 +1,31 @@
 package com.platform.application.sysmanage.role;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.platform.application.common.dto.AbstractDto;
 import com.platform.application.sysmanage.role.bean.TmRole;
 
 @SuppressWarnings("serial")
-public class TmRoleDto extends AbstractDto {
+public class TmRoleDto extends AbstractDto implements Serializable {
 	/**
 	 * 角色代码.
 	 */
+	@NotBlank(message = "角色代码没有填写")
+	@Pattern(regexp = "[0-9]{6}", message = "角色代码必须为6位数字")
 	private String roleCode;
 
 	/**
 	 * 角色名称.
 	 */
+	@NotBlank(message = "角色名称没有填写")
 	private String roleName;
 
 	/**
@@ -32,11 +41,13 @@ public class TmRoleDto extends AbstractDto {
 	/**
 	 * 启用时间.
 	 */
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = TIMEZONE_BEIJING)
 	private Date startTime;
 
 	/**
 	 * 停用时间.
 	 */
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = TIMEZONE_BEIJING)
 	private Date stopTime;
 
 	/**
@@ -47,6 +58,7 @@ public class TmRoleDto extends AbstractDto {
 	/**
 	 * 创建时间.
 	 */
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = TIMEZONE_BEIJING)
 	private Date creatTime;
 
 	/**

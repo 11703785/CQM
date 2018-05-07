@@ -14,7 +14,7 @@
 <script type="text/javascript" src="resource/js/jquery-1.8.0.min.js"></script>
 <script type="text/javascript" src="resource/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="resource/js/datagrid-detailview.js"></script>
-<script type="text/javascript" src="resourcejs/jquery.validaterule.js"></script>
+<script type="text/javascript" src="resource/js/jquery.validaterule.js"></script>
 <script type="text/javascript" src="resource/easyui/locale/easyui-lang-zh_CN.js"></script>
 <link rel="icon" href="skin/favicon.ico" type="image/x-icon" />
 <link rel="stylesheet" type="text/css" href="skin/top.css" />

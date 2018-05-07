@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.platform.application.common.cache.CacheProxyFactory;
 import com.platform.application.common.dto.ResultResponse;
-import com.platform.application.sysmanage.org.OrgDto;
+import com.platform.application.sysmanage.org.TmOrgDto;
 import com.platform.application.sysmanage.org.cache.TmOrgCache;
 import com.platform.application.sysmanage.right.TmRightDto;
 import com.platform.application.sysmanage.right.cache.TmRightCache;
@@ -65,7 +65,7 @@ public class LoginService {
 				}
 				return new ResultResponse<LoginInfo>(false, err);
 			}
-			OrgDto orgDto = cacheProxyFactory.getCacheValue(TmOrgCache.class, user.getOrgCode());
+			TmOrgDto orgDto = cacheProxyFactory.getCacheValue(TmOrgCache.class, user.getOrgCode());
 			if(orgDto != null){
 				if(StringUtils.equals("0", orgDto.getStatus())){
 					login = new LoginInfo(user.getUserId(), user.getOrgCode(),
@@ -157,7 +157,7 @@ public class LoginService {
 	 * @param org  机构信息
 	 * @return 权限集合
 	 */
-	private Set<String> getUserRights(final UserDto user, final OrgDto org) {
+	private Set<String> getUserRights(final UserDto user, final TmOrgDto org) {
 		Set<String> orgRights = null;
 		// 系统配置用户权限，不需要权限列表。
 		if ("9".equals(user.getType()) && StringUtils.isEmpty(org.getUpOrg())) {

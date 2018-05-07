@@ -26,7 +26,7 @@ public class App {
 		//
 		//		System.out.println(x);
 
-		File file1 = new File("C:\\Users\\liukun\\Desktop\\sys_department1.sql");
+		File file1 = new File("C:\\Users\\liukun\\Desktop\\sys_area1.sql");
 		BufferedReader reader1 = null;
 		try {
 			System.out.println("以行为单位读取文件内容，一次读一整行：");
@@ -37,10 +37,11 @@ public class App {
 				tempString = tempString.substring(tempString.indexOf("(") + 1, tempString.lastIndexOf(")"));
 				String[] splits = tempString.split(",");
 				// 显示行号
-				System.out.println("INSERT INTO `sys_department` (orgcode, orgname, uporg, perorgcode, entorgcode, startus, orgtype, areacode, remark, creator, creattime)"
+				/*System.out.println("INSERT INTO `sys_department` (orgcode, orgname, uporg, perorgcode, entorgcode, startus, orgtype, areacode, remark, creator, creattime)"
 						+ " VALUES (" + splits[0] + ","+ splits[3] + "," + splits[9] + ","+ splits[1] + ","
 						+ splits[2] + ", '0'," + splits[7] + "," + splits[14] + ","
-						+ splits[3] + ", '79100010002', TIMESTAMP '2018-04-25 15:21:49');");
+						+ splits[3] + ", '79100010002', TIMESTAMP '2018-04-25 15:21:49');");*/
+				System.out.println("INSERT INTO `sys_area` VALUES (" + splits[0] + ", " + splits[1] + ", " + splits[4] + ", NULL" + ");");
 			}
 			reader1.close();
 		} catch (IOException e) {

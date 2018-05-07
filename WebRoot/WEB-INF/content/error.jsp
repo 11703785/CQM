@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<% String webapp = request.getContextPath(); %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="zh-cn">
@@ -9,11 +8,11 @@
 <META HTTP-EQUIV="pragma" CONTENT="no-cache">
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
 
-<script language="javascript" src="<%=webapp%>/resource/adminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
-<script language="javascript" src="<%=webapp%>/resource/adminLTE/bootstrap/js/bootstrap.min.js"></script>
+<script language="javascript" src="resource/adminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script language="javascript" src="resource/adminLTE/bootstrap/js/bootstrap.min.js"></script>
 
-<link rel="stylesheet" href="<%=webapp%>/resource/adminLTE/dist/css/AdminLTE.min.css">
-<link rel="stylesheet" href="<%=webapp%>/resource/adminLTE/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="resource/adminLTE/dist/css/AdminLTE.min.css">
+<link rel="stylesheet" href="resource/adminLTE/bootstrap/css/bootstrap.min.css">
 
   </head>
   

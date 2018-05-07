@@ -1,19 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <div class="easyui-layout" id="person" style="width: 100%; height: 100%">
-	<div region="west" title="机构树" split="true" style="width: 260px">
+	<!-- <div region="west" title="机构树" split="true" style="width: 260px">
 		<ul id="orgTree"></ul>
-	</div>
+	</div> -->
 	<div data-options="region:'center'" title="人员管理" id="personContent"
 		split="true">
 		<div id="user_tb" style="padding: 5px; height: auto">
 			<div>
 				<a href="javascript:void(0)" class="easyui-linkbutton"
 					iconCls="icon-add" plain="true" onclick="javascript:addUser()">新增</a>
-				<a href="javascript:void(0)" class="easyui-linkbutton"
-					iconCls="icon-remove" plain="true" onclick="Person.deleteAll()">删除</a>
-				<a href="javascript:void(0)" class="easyui-linkbutton"
-					iconCls="icon-undo" plain="true" onclick="Person.resetPassword()">重置密码</a>
 			</div>
 		</div>
 		<table id="user_dg"
@@ -45,6 +41,15 @@
 	</div>
 </div>
 <script type="text/javascript">
+	function userTypeFormatter(value, row, index){
+		var arr = appDicMap[appDicKey.userStatus]
+	    for (var i = 0; i < arr.length; i++) {
+	        if (value === arr[i].key) {
+	            return "<span style='color:green;'>" + arr[i].value + "</span>";
+	        }
+	    }
+	    return "<span style='color:green;'>" + value + "</span>";
+	}
 	// 初始化机构树
 	$(function(){
 		var orgTree = $('#orgTree').tree({
@@ -66,14 +71,14 @@
 	});
 	function addUser() {
 		new rjhc.showDialog({
-			id : 'user_addwin',
+			id : 'user_newwin',
 			modal : true,
 			closed : true,
-			iconCls : 'icon-edit',
+			iconCls : 'icon-add',
 			draggable : false,
-			width : 300,
+			width : 530,
 			title : "新增用户",
-			height : 450,
+			height : 550,
 			cache : false,
 			href : 'user/showadd',
 		}).window('open');

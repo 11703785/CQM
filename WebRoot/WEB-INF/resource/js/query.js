@@ -352,6 +352,8 @@ function addrow(model, modelName) {
     }
 }
 function deleterow(model, modelName) {
+	var formRef = $("#" + model + "_df");
+	var form = getFormObject(formRef);
     var idField = $("#" + model + "_dg").datagrid('options').idField;
     var id = eval("form." + idField);
     $.messager.confirm("确认", "是否删除" + modelName + " " + id + " ?", function (r) {
@@ -369,22 +371,6 @@ function deleterow(model, modelName) {
                 }, error: ajaxerror
             });
         }
-    });
-}
-function changeTheme(themeName) {/* 更换主题 */
-    var $easyuiTheme = $('#easyuiTheme');
-    var url = $easyuiTheme.attr('href');
-    var href = url.substring(0, url.indexOf('themes')) + 'themes/' + themeName + '/easyui.css';
-    $easyuiTheme.attr('href', href);
-    var $iframe = $('iframe');
-    if ($iframe.length > 0) {
-        for (var i = 0; i < $iframe.length; i++) {
-            var ifr = $iframe[i];
-            $(ifr).contents().find('#easyuiTheme').attr('href', href);
-        }
-    }
-    $.cookie('easyuiThemeName', themeName, {
-        expires: 7
     });
 }
 function changepwd() {
@@ -436,6 +422,9 @@ function updaterow(model, modelName) {
 }
 function orgTreeExpand(obj, node) {
     $(obj).tree("options").url = 'org/orgtree/' + node.id;
+}
+function areaTreeExpand(obj, node) {
+    $(obj).tree("options").url = 'area/areatree/' + node.id;
 }
 $(function () {
     $.extend($.fn.window.defaults, {closable: true});

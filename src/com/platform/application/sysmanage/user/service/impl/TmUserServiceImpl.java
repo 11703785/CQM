@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.platform.application.common.cache.CacheProxyFactory;
 import com.platform.application.common.dto.PageResponse;
 import com.platform.application.sysmanage.login.LoginInfo;
-import com.platform.application.sysmanage.org.OrgDto;
+import com.platform.application.sysmanage.org.TmOrgDto;
 import com.platform.application.sysmanage.org.cache.TmOrgCache;
 import com.platform.application.sysmanage.role.bean.TmRole;
 import com.platform.application.sysmanage.service.AbstractService;
@@ -83,24 +83,31 @@ public class TmUserServiceImpl extends AbstractService implements TmUserService 
 	}
 	/**
 	 * 更新用户信息
-	 * @param tranInst 用户实体类对象
+	 * @param dto 用户实体类对象
 	 * @return 更新后交互对象
 	 */
 	@Override
 	@Transactional
-	public UserDto update(final TmUser tranInst) {
+	public UserDto update(final UserDto dto) throws Exception {
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("正在修改 " + tranInst.toString());
+			LOGGER.debug("开始修改用户信息[" + dto + "]");
 		}
 		try {
-			sessionFactory.getCurrentSession().clear();
-			sessionFactory.getCurrentSession().update(tranInst);
+			final Session session = sessionFactory.getCurrentSession();
+			final TmUser user = (TmUser) session.load(TmUser.class, dto.getUserId());
+			user.setName(dto.getName());
+			user.setOrgCode(dto.getOrgCode());
+			user.setUserDesc(dto.getUserDesc());
+			user.setTelephone(dto.getTelephone());
+			user.setEmail(dto.getEmail());
+			user.setType(dto.getType());
+			session.update(user);
 			if (LOGGER.isDebugEnabled()) {
-				LOGGER.debug("修改成功 " + tranInst.toString());
+				LOGGER.debug("修改用户信息成功[" + user + "]");
 			}
-			return tranInst.convertDto();
+			return user.convertDto();
 		} catch (final RuntimeException re) {
-			LOGGER.error("修改失败 " + tranInst.toString(), re);
+			LOGGER.error("修改用户信息失败[" + dto + "]:" + re.getMessage(), re);
 			throw re;
 		}
 	}
@@ -156,7 +163,7 @@ public class TmUserServiceImpl extends AbstractService implements TmUserService 
 				} else {
 					dto = instance.convertDto();
 				}
-				final OrgDto org = cacheProxyFactory.getCacheValue(TmOrgCache.class, instance.getOrgCode());
+				final TmOrgDto org = cacheProxyFactory.getCacheValue(TmOrgCache.class, instance.getOrgCode());
 				dto.setOrgName(org.getOrgName());
 			}
 			if (LOGGER.isDebugEnabled()) {
@@ -211,48 +218,6 @@ public class TmUserServiceImpl extends AbstractService implements TmUserService 
 		}
 	}
 	/**
-	 * 生成查询条件
-	 * @param criteria
-	 * @param dto 用户信息传输类
-	 * @return
-	 */
-	private Criteria addCondition(final Criteria criteria, final UserDto dto, final LoginInfo loginInfo) {
-		if(StringUtils.isNotBlank(dto.getUserId())){
-			criteria.add(Restrictions.eq("userId", dto.getUserId()));
-		}
-		if(StringUtils.isNotBlank(dto.getOrgCode())){
-			criteria.add(Restrictions.eq("orgCode", dto.getOrgCode()));
-		}
-		if(StringUtils.isNotBlank(dto.getName())){
-			criteria.add(Restrictions.eq("name", dto.getName()));
-		}
-		if(StringUtils.isNotBlank(dto.getTelephone())){
-			criteria.add(Restrictions.eq("telephone", dto.getTelephone()));
-		}
-		if(StringUtils.isNotBlank(dto.getEmail())){
-			criteria.add(Restrictions.eq("email", dto.getEmail()));
-		}
-		if(StringUtils.isNotBlank(dto.getUserDesc())){
-			criteria.add(Restrictions.eq("userDesc", dto.getUserDesc()));
-		}
-		if(dto.getLastLogonTime()!=null){
-			criteria.add(Restrictions.eq("lastLogonTime", dto.getLastLogonTime()));
-		}
-		if(StringUtils.isNotBlank(dto.getStatus())){
-			criteria.add(Restrictions.eq("status", dto.getStatus()));
-		}
-		if(StringUtils.isNotBlank(dto.getCreator())){
-			criteria.add(Restrictions.eq("creator", dto.getCreator()));
-		}
-		if(dto.getCreateTime()!=null){
-			criteria.add(Restrictions.eq("createTime", dto.getCreateTime()));
-		}
-		if(StringUtils.isNotBlank(dto.getRoles())){
-			criteria.add(Restrictions.eq("roles", dto.getRoles()));
-		}
-		return criteria;
-	}
-	/**
 	 * 根据条件查找用户信息
 	 * @param userDto 用户交互类
 	 * @param loginInfo 登录用户信息
@@ -265,7 +230,39 @@ public class TmUserServiceImpl extends AbstractService implements TmUserService 
 		}
 		try {
 			final Criteria criteria = sessionFactory.getCurrentSession().createCriteria(TmUser.class);
-			this.addCondition(criteria, userDto, loginInfo);
+			if(StringUtils.isNotBlank(userDto.getUserId())){
+				criteria.add(Restrictions.eq("userId", userDto.getUserId()));
+			}
+			if(StringUtils.isNotBlank(userDto.getOrgCode())){
+				criteria.add(Restrictions.eq("orgCode", userDto.getOrgCode()));
+			}
+			if(StringUtils.isNotBlank(userDto.getName())){
+				criteria.add(Restrictions.eq("name", userDto.getName()));
+			}
+			if(StringUtils.isNotBlank(userDto.getTelephone())){
+				criteria.add(Restrictions.eq("telephone", userDto.getTelephone()));
+			}
+			if(StringUtils.isNotBlank(userDto.getEmail())){
+				criteria.add(Restrictions.eq("email", userDto.getEmail()));
+			}
+			if(StringUtils.isNotBlank(userDto.getUserDesc())){
+				criteria.add(Restrictions.eq("userDesc", userDto.getUserDesc()));
+			}
+			if(userDto.getLastLogonTime()!=null){
+				criteria.add(Restrictions.eq("lastLogonTime", userDto.getLastLogonTime()));
+			}
+			if(StringUtils.isNotBlank(userDto.getStatus())){
+				criteria.add(Restrictions.eq("status", userDto.getStatus()));
+			}
+			if(StringUtils.isNotBlank(userDto.getCreator())){
+				criteria.add(Restrictions.eq("creator", userDto.getCreator()));
+			}
+			if(userDto.getCreateTime()!=null){
+				criteria.add(Restrictions.eq("createTime", userDto.getCreateTime()));
+			}
+			if(StringUtils.isNotBlank(userDto.getRoles())){
+				criteria.add(Restrictions.eq("roles", userDto.getRoles()));
+			}
 			final int count = ((Long) criteria.setProjection(Projections.rowCount()).uniqueResult()).intValue();
 			int page = userDto.getPage();
 			if (page < 1) {
@@ -280,7 +277,10 @@ public class TmUserServiceImpl extends AbstractService implements TmUserService 
 					.addOrder(Order.desc("createTime")).list();
 			final List<UserDto> dtos = new ArrayList<UserDto>();
 			for (final TmUser u : results) {
-				dtos.add(u.convertDto());
+				TmOrgDto org = cacheProxyFactory.getCacheValue(TmOrgCache.class, u.getOrgCode());
+				final UserDto dto = u.convertDto();
+				dto.setOrgName(org.getOrgName());
+				dtos.add(dto);
 			}
 			if (LOGGER.isDebugEnabled()) {
 				LOGGER.debug("查询用户信息成功,条件[" + results + "]");

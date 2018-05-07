@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.platform.application.common.cache.ICacheProxy;
 import com.platform.application.common.cache.annotation.CacheComponent;
 import com.platform.application.sysmanage.role.TmRoleDto;
-import com.platform.application.sysmanage.role.TmRoleService;
+import com.platform.application.sysmanage.role.service.impl.TmRoleServiceImpl;
 
 /**
  * 平台角色缓存类.
@@ -34,7 +34,7 @@ public class TmRoleCache implements ICacheProxy<TmRoleDto> {
 	 * 平台角色服务类.
 	 */
 	@Autowired
-	private TmRoleService roleService;
+	private TmRoleServiceImpl roleService;
 
 	@Override
 	public TmRoleDto getCacheValue(final String key) {

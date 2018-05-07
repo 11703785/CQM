@@ -1,6 +1,12 @@
 var appDicMap;
 var appDicKey = {
-	userStatus: '31'
+	orgType: '2',
+	areaLevels: '3',
+	orgStatus: '30',
+	userStatus: '31',
+	userType: '35',
+    roleStatus: '36',
+    roleType: '37'
     /*cerType: '1',
     archiveType: '2',
     archiveStatus: '3',

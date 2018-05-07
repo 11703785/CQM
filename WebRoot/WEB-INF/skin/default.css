@@ -66,7 +66,7 @@
 
 .rjhc-table-dialog td {
     padding: 3px 2px;
-    width: 80px
+    width: 80px;
 }
 
 .rjhc-table-dialog td.firstval {
@@ -90,7 +90,6 @@
 
 .rjhc-table-detail {
     border: none;
-    width: 744px
 }
 
 .rjhc-table-detail input {
@@ -107,14 +106,7 @@
 
 .rjhc-table-detail td {
     border: none;
-    padding: 3px 2px;
+    padding: 2px 2px;
     width: 80px
 }
 
-.rjhc-table-detail td.firstval {
-    width: 170px;
-}
-
-.rjhc-table-detail td.secondval {
-    width: 140px;
-}
