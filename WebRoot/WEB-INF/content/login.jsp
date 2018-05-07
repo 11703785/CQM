@@ -33,18 +33,8 @@ function loginSubmit(){
 			if(data.status){
 				window.location.href = "index";
 			} else {
-				alert("µÇÂ¼Ê§°Ü£º" + data.error);
+				$.messager.alert("µÇÂ¼Ê§°Ü", data.error, 'error');
 			}
-		/* 	console.log(data);
-		if (rArr[0]=="false"){//µÇÂ¼Ê§°Ü
-			alert("µÇÂ¼Ê§°Ü£º"+rArr[1]);
-		} else{//µÇÂ¼³É¹¦
-			location.replace("goon.action");
-			/*if(rArr[1]=="1" || rArr[1]=="0"){//ÒÑ×¢²á
-			}else{//ÊÔÓÃÆÚ »ò ¹ýÆÚ
-				location.replace("index_anonymous.action?flag="+rArr[1]+"&version="+rArr[2]+"&days="+rArr[3]);
-			}
-		} */
 	});
 }
 //µã»÷enter¼ü½øÐÐµÇÂ½
