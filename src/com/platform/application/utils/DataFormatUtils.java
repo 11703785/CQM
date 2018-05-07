@@ -1,8 +1,11 @@
 package com.platform.application.utils;
 
+import java.net.InetAddress;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 日期时间格式工具类.
@@ -97,5 +100,31 @@ public final class DataFormatUtils {
 		calendar.setTime(trimTime(date));
 		calendar.add(Calendar.DATE, interval);
 		return calendar.getTime();
+	}
+
+	/**
+	 * 获取真实IP地址;
+	 */
+	public static String getIpAddr(final HttpServletRequest request) throws Exception {
+		String ipAddress = request.getHeader("x-forwarded-for");
+		if ((ipAddress == null) || (ipAddress.length() == 0) || ("unknown".equalsIgnoreCase(ipAddress))) {
+			ipAddress = request.getHeader("Proxy-Client-IP");
+		}
+		if ((ipAddress == null) || (ipAddress.length() == 0) || ("unknown".equalsIgnoreCase(ipAddress))) {
+			ipAddress = request.getHeader("WL-Proxy-Client-IP");
+		}
+		if ((ipAddress == null) || (ipAddress.length() == 0) || ("unknown".equalsIgnoreCase(ipAddress))) {
+			ipAddress = request.getRemoteAddr();
+			if ((ipAddress.equals("127.0.0.1")) || (ipAddress.equals("0:0:0:0:0:0:0:1"))) {
+				InetAddress inet = null;
+				inet = InetAddress.getLocalHost();
+				ipAddress = inet.getHostAddress();
+			}
+		}
+		if ((ipAddress != null) && (ipAddress.length() > 15) &&
+				(ipAddress.indexOf(",") > 0)) {
+			ipAddress = ipAddress.substring(0, ipAddress.indexOf(","));
+		}
+		return ipAddress;
 	}
 }

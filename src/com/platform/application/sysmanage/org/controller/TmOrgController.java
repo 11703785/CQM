@@ -97,6 +97,16 @@ public class TmOrgController {
 	}
 
 	/**
+     * 获取机构查询界面.
+     *
+     * @return 机构查询界面
+     */
+    @RequestMapping(value = "/showquery", method = RequestMethod.GET)
+    public ModelAndView getQueryPage() {
+        return new ModelAndView("sysmanage/org/query");
+    }
+
+	/**
 	 * 根据机构代码和角色类型获取机构的角色信息.
 	 *
 	 * @param orgCode 机构代码

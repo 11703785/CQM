@@ -68,8 +68,8 @@ public class LoginService {
 			TmOrgDto orgDto = cacheProxyFactory.getCacheValue(TmOrgCache.class, user.getOrgCode());
 			if(orgDto != null){
 				if(StringUtils.equals("0", orgDto.getStatus())){
-					login = new LoginInfo(user.getUserId(), user.getOrgCode(),
-							user.getType(), StringUtils.isEmpty(orgDto.getUpOrg()), user.getOrgName());
+					login = new LoginInfo(user.getUserId(), user.getOrgCode(), user.getType(),
+							StringUtils.isEmpty(orgDto.getUpOrg()), user.getOrgName(), user.getName());
 					login.setRights(getUserRights(user, orgDto));
 				}
 			} else {

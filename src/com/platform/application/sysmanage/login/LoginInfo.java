@@ -17,7 +17,10 @@ public class LoginInfo implements Comparable<LoginInfo>, Serializable {
 	 * 用户ID.
 	 */
 	private String userId;
-
+	/**
+	 * 用户名称.
+	 */
+	private String userName;
 	/**
 	 * 所属机构.
 	 */
@@ -76,12 +79,13 @@ public class LoginInfo implements Comparable<LoginInfo>, Serializable {
 			final String orgCodeVal,
 			final String userTypeVal,
 			final boolean isTopOrgVal,
-			final String orgName) {
+			final String orgName, final String userName) {
 		this.userId = userIdVal;
 		this.orgCode = orgCodeVal;
 		this.userType = userTypeVal;
 		this.topOrg = isTopOrgVal;
 		this.orgName = orgName;
+		this.userName = userName;
 	}
 
 	/**
@@ -190,6 +194,22 @@ public class LoginInfo implements Comparable<LoginInfo>, Serializable {
 	 */
 	public  void setOrgName(final String orgNameVal) {
 		this.orgName = orgNameVal;
+	}
+
+	/**
+	 * 获取用户名称.
+	 * @return 用户名称
+	 */
+	public String getUserName() {
+		return userName;
+	}
+
+	/**
+	 * 设置用户名称.
+	 * @param userName 用户名称
+	 */
+	public void setUserName(final String userName) {
+		this.userName = userName;
 	}
 
 	/**

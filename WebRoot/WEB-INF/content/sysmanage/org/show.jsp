@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div class="easyui-layout" style="width: 100%;height:100%">
-	<div data-options="region:'center'" title="机构管理" id="personContent" split="true">
+	<div data-options="region:'center'" title="机构管理" id="orgContent" split="true">
 		<div id="org_tb" style="padding: 5px; height: auto">
 			<div>
 				<a href="javascript:void(0)" class="easyui-linkbutton"
 					iconCls="icon-add" plain="true" onclick="javascript:addUser()">新增</a>
+				<a class="easyui-linkbutton" iconCls="icon-search" plain="true"
+               		onclick="javascript:$('#org_querywin').window('open');">查询</a>
 			</div>
 		</div>
 		<table id="org_dg" style="width:100%;height:100%;min-height:260px;">
@@ -22,6 +24,9 @@
 				</tr>
 			</thead>
 		</table>
+		<div id="org_querywin" class="easyui-dialog" title="查询机构"
+         data-options="modal:true,closed:true,iconCls:'icon-search',draggable:false,closable:false,href:'org/showquery'"
+         style="width:522px;height:178px;"></div>
 	</div>
 </div>
 <script type="text/javascript">

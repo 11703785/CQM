@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<div class="easyui-layout" id="person" style="width: 100%; height: 100%">
-	<div data-options="region:'center'" title="辖区管理" id="personContent"
+<div class="easyui-layout" id="area" style="width: 100%; height: 100%">
+	<div data-options="region:'center'" title="辖区管理" id="areaContent"
 		split="true">
 		<div id="area_tb" style="padding: 5px; height: auto">
 			<div>

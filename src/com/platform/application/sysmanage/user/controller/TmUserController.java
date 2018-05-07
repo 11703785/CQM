@@ -22,6 +22,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.platform.application.common.cache.CacheProxyFactory;
 import com.platform.application.common.dto.PageResponse;
 import com.platform.application.common.dto.ResultResponse;
+import com.platform.application.common.spring.OperationControllerLog;
+import com.platform.application.common.spring.OperationType;
 import com.platform.application.sysmanage.login.LoginInfo;
 import com.platform.application.sysmanage.org.service.TmOrgService;
 import com.platform.application.sysmanage.right.TmRightTreeDto;
@@ -269,6 +271,7 @@ public class TmUserController extends BaseAction {
 	 * @return PageResponse<TmUserDto>
 	 */
 	@RequestMapping(value = "/find", method = RequestMethod.POST, produces = { MediaTypeUtils.UTF_8 })
+	@OperationControllerLog(description = "查询用户", type = OperationType.QUERY)
 	public PageResponse<UserDto> findByDto(@RequestBody final UserDto dto, final HttpSession session) {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("POST /user/find [" + dto + "]");

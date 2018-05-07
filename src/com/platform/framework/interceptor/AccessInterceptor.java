@@ -47,6 +47,7 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
 		endExcludedUrls.add(".css");
 		endExcludedUrls.add(".png");
 		endExcludedUrls.add(".gif");
+		endExcludedUrls.add(".ico");
 		endExcludedUrls.add(".jpg");
 		endExcludedUrls.add("/index");
 		endExcludedUrls.add("/index/desktop");
