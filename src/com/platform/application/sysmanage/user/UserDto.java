@@ -181,6 +181,7 @@ public class UserDto extends AbstractDto implements java.io.Serializable {
 	 * @param nameVal 用户名称
 	 */
 	public void setName(final String nameVal) {
+		setOperName(nameVal + "[" + getUserId() + "]");
 		this.name = nameVal;
 	}
 

@@ -22,6 +22,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.platform.application.common.cache.CacheProxyFactory;
 import com.platform.application.common.dto.PageResponse;
 import com.platform.application.common.dto.ResultResponse;
+import com.platform.application.common.spring.OperationControllerLog;
+import com.platform.application.common.spring.OperationType;
 import com.platform.application.sysmanage.area.TdAreaDto;
 import com.platform.application.sysmanage.area.cache.TdAreaCache;
 import com.platform.application.sysmanage.area.service.TdAreaService;
@@ -105,6 +107,7 @@ public class TdAreaController {
 	 * @return ResultResponse<UserDto>
 	 */
 	@RequestMapping(method = RequestMethod.POST, produces = { MediaTypeUtils.UTF_8 })
+	@OperationControllerLog(description = "新增辖区", type = OperationType.ADD)
 	public ResultResponse<TdAreaDto> save(@RequestBody @Valid final TdAreaDto areaDto, final BindingResult result,
 			final HttpSession session) {
 		if (LOGGER.isDebugEnabled()) {
@@ -134,6 +137,7 @@ public class TdAreaController {
 	 * @return ResultResponse<UserDto>
 	 */
 	@RequestMapping(method = RequestMethod.PUT, produces = { MediaTypeUtils.UTF_8 })
+	@OperationControllerLog(description = "修改辖区", type = OperationType.UPDATE)
 	public ResultResponse<TdAreaDto> update(@RequestBody @Valid final TdAreaDto areaDto, final BindingResult result) {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("PUT /area [" + areaDto + "]");
@@ -145,14 +149,14 @@ public class TdAreaController {
 		try {
 			final TdAreaDto dto = areaService.update(areaDto);
 			if (LOGGER.isDebugEnabled()) {
-				LOGGER.debug("PUT /user 更新成功[" + dto + "]");
+				LOGGER.debug("PUT /area 更新成功[" + dto + "]");
 			}
 			return new ResultResponse<TdAreaDto>(true, dto);
 		} catch (final RuntimeException re) {
-			LOGGER.error("PUT /user [" + areaDto + "]:更新失败!", re);
+			LOGGER.error("PUT /area [" + areaDto + "]:更新失败!", re);
 			return new ResultResponse<TdAreaDto>(false, "更新失败！");
 		} catch (final Exception e) {
-			LOGGER.error("PUT /user [" + areaDto + "]:更新失败!", e);
+			LOGGER.error("PUT /area [" + areaDto + "]:更新失败!", e);
 			return new ResultResponse<TdAreaDto>(false, e.getMessage());
 		}
 	}
@@ -199,20 +203,20 @@ public class TdAreaController {
 	@RequestMapping(value = "/find", method = RequestMethod.POST, produces = { MediaTypeUtils.UTF_8 })
 	public PageResponse<TdAreaDto> findByDto(@RequestBody final TdAreaDto dto) {
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("POST /user/find [" + dto + "]");
+			LOGGER.debug("POST /area/find [" + dto + "]");
 		}
 		try {
 			final PageResponse<TdAreaDto> results = areaService.findByDto(dto);
 			if (LOGGER.isDebugEnabled()) {
 				if (results.isStatus()) {
-					LOGGER.debug("POST /user/find 查询成功[" + dto + "]");
+					LOGGER.debug("POST /area/find 查询成功[" + dto + "]");
 				} else {
-					LOGGER.debug("POST /user/find 查询失败[" + results.getError() + "]");
+					LOGGER.debug("POST /area/find 查询失败[" + results.getError() + "]");
 				}
 			}
 			return results;
 		} catch (final Exception re) {
-			LOGGER.error("POST /user/find [" + dto + "]:查询失败!", re);
+			LOGGER.error("POST /area/find [" + dto + "]:查询失败!", re);
 			return new PageResponse<TdAreaDto>(false, re.getMessage());
 		}
 	}
@@ -249,10 +253,10 @@ public class TdAreaController {
 			pt = response.getWriter();
 			pt.write(json);
 			if (LOGGER.isTraceEnabled()) {
-				LOGGER.trace("POST /org/orgtree 获取辖区树的根及下级节点成功[" + json + "]");
+				LOGGER.trace("POST /area/areatree 获取辖区树的根及下级节点成功[" + json + "]");
 			}
 		} catch (IOException e) {
-			LOGGER.error("POST /org/orgtree 开始获辖区树的根及下级节点:" + e.getMessage(), e);
+			LOGGER.error("POST /area/areatree 开始获辖区树的根及下级节点:" + e.getMessage(), e);
 		} finally {
 			if (null != pt) {
 				pt.close();
@@ -270,7 +274,7 @@ public class TdAreaController {
 	@RequestMapping(value = "/areatree/{areaId}", method = RequestMethod.POST, produces = {MediaTypeUtils.UTF_8})
 	public void getOrgTree(@PathVariable("areaId") final String areaId, final HttpServletResponse response) {
 		if (LOGGER.isTraceEnabled()) {
-			LOGGER.trace("POST /org/orgtree 开始获取机构树的下级节点[" + areaId + "]");
+			LOGGER.trace("POST /area/areatree 开始获取辖区树的下级节点[" + areaId + "]");
 		}
 		response.setCharacterEncoding("UTF-8");
 		String json = areaService.getTree(areaId);
@@ -282,10 +286,10 @@ public class TdAreaController {
 			pt = response.getWriter();
 			pt.write(json);
 			if (LOGGER.isTraceEnabled()) {
-				LOGGER.trace("POST /org/orgtree 获取机构树的下级节点成功[" + json + "]");
+				LOGGER.trace("POST /area/areatree 获取辖区树的下级节点成功[" + json + "]");
 			}
 		} catch (IOException e) {
-			LOGGER.trace("POST /org/orgtree 获取机构树的下级节点失败[" + areaId + "]:" + e.getMessage(), e);
+			LOGGER.trace("POST /area/areatree 获取辖区树的下级节点失败[" + areaId + "]:" + e.getMessage(), e);
 		} finally {
 			if (null != pt) {
 				pt.close();
@@ -315,10 +319,10 @@ public class TdAreaController {
 			pt = response.getWriter();
 			pt.write(json);
 			if (LOGGER.isTraceEnabled()) {
-				LOGGER.trace("POST /org/uporgtree 获取登录用户可见机构树成功[" + json + "]");
+				LOGGER.trace("POST /area/upareatree 获取登录用户可见辖区树成功[" + json + "]");
 			}
 		} catch (IOException e) {
-			LOGGER.trace("POST /org/uporgtree 获取登录用户可见机构树失败[" + areaId + "]:" + e.getMessage(), e);
+			LOGGER.trace("POST /area/upareatree 获取登录用户可见辖区树失败[" + areaId + "]:" + e.getMessage(), e);
 		} finally {
 			if (null != pt) {
 				pt.close();

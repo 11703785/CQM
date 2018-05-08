@@ -212,16 +212,13 @@ public class TmOrgSerivceImpl extends AbstractService implements TmOrgService {
 				criteria.add(Restrictions.eq("creator", dto.getCreator()));
 			}
 			if (dto.getCreateTime() != null) {
-				criteria.add(Restrictions.eq("createTime",
-						dto.getCreateTime()));
+				criteria.add(Restrictions.eq("createTime", dto.getCreateTime()));
 			}
 			if (dto.getStartCreateTime() != null) {
-				criteria.add(Restrictions.ge("createTime",
-						dto.getStartCreateTime()));
+				criteria.add(Restrictions.ge("createTime", dto.getStartCreateTime()));
 			}
 			if (dto.getEndCreateTime() != null) {
-				criteria.add(Restrictions.le("createTime",
-						dto.getEndCreateTime()));
+				criteria.add(Restrictions.le("createTime", dto.getEndCreateTime()));
 			}
 			if (StringUtils.isNotBlank(loginOrgCode)) {
 				criteria.add(Restrictions.in("orgCode", CacheConverterUtils.getBranchAndSelf(cacheProxyFactory, loginOrgCode)));

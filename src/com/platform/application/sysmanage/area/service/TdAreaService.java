@@ -11,7 +11,7 @@ public interface TdAreaService {
 	 * @param tdArea 辖区实体类对象
 	 * @return 保存后交互对象
 	 */
-	public TdAreaDto persist(TdArea tdArea);
+	public TdAreaDto persist(TdArea tdArea) throws Exception;
 
 	/**
 	 * 更新辖区信息.

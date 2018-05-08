@@ -3,43 +3,43 @@
 <html>
 <body>
 <div class="easyui-layout" data-options="fit:true">
-    <div class="sugar-panel-center" data-options="region:'center'">
-        <div class="easyui-panel sugar-panel-inner">
+    <div class="rjhc-panel-center" data-options="region:'center'">
+        <div class="easyui-panel rjhc-panel-inner">
             <form id="operatelog_qf" class="easyui-form" method="post">
-                <table cellspacing="0" class="sugar-table-dialog">
+                <table cellspacing="0" class="rjhc-table-dialog">
                     <tr>
                         <td>用户标识:</td>
                         <td class="firstval">
                             <input class="easyui-textbox" type="text" name="userId"
                                    data-options="validType:['length[1,30]'],invalidMessage:'用户标识',missingMessage:'用户标识'"/>
                         </td>
-                        <td>操作类型:</td>
+                        <td>操作人员IP:</td>
                         <td class="secondval">
-                            <select class="easyui-combobox" name="oprType" id="oprType"
-                                    data-options="editable:false,panelHeight:'auto',missingMessage:'操作类型',valueField: 'key',textField:'value',data:operatelogdic.oprInfoType">
-                            </select></td>
+                            <input class="easyui-textbox" name="loginIp" id="loginIp"
+                                    data-options="validType:['length[1,30]'],invalidMessage:'操作人员IP',missingMessage:'操作人员IP'"/>
+                            </td>
                     </tr>
                     <tr>
+                        <td>机构名称:</td>
+                        <td><input class="easyui-textbox" type="text" name="orgName"
+                                   data-options="validType:['length[1,80]'],invalidMessage:'机构名称',missingMessage:'机构名称'"/>
+                        </td>
                         <td>创建起始时间:</td>
                         <td><input class="easyui-datebox" name="queryStartTime" id="queryStartTime"
                                    data-options="validType:['length[1,26]'],invalidMessage:'创建起始时间',missingMessage:'创建起始时间'"/>
                         </td>
+                    </tr>
+                    <tr>
                         <td>创建结束时间:</td>
                         <td><input class="easyui-datebox" name="queryEndTime" id="queryEndTime"
                                    data-options="validType:['length[1,26]'],invalidMessage:'创建结束时间',missingMessage:'创建结束时间'"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>子系统代码:</td>
-                        <td><input class="easyui-textbox" type="text" name="subsystem"
-                                   data-options="validType:['length[1,30]'],invalidMessage:'子系统代码',missingMessage:'子系统代码'"/>
                         </td>
                     </tr>
                 </table>
             </form>
         </div>
     </div>
-    <div class="sugar-panel-south" data-options="region:'south'">
+    <div class="rjhc-panel-south" data-options="region:'south'">
         <a class="easyui-linkbutton" data-options="iconCls:'icon-search'"
            href="javascript:void(0)" onclick="javascript:queryoperatelogrow()">查询</a>
         <a class="easyui-linkbutton" data-options="iconCls:'icon-undo'" href="javascript:void(0)"

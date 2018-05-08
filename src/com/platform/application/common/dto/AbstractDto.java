@@ -21,14 +21,10 @@ public class AbstractDto implements java.io.Serializable {
 	private int rows;
 
 	/**
-	 * 接口登录账号.
+	 * 操作日志名称.
 	 */
-	private String loginName;
+	private String operName;
 
-	/**
-	 * 接口登录密码.
-	 */
-	private String password;
 
 	/**
 	 * 获取当前页数.
@@ -71,38 +67,21 @@ public class AbstractDto implements java.io.Serializable {
 	}
 
 	/**
-	 * 获取接口登录账号.
+	 * 获取操作日志名称.
 	 *
 	 * @return 接口登录账号
 	 */
-	public String getLoginName() {
-		return loginName;
+	public String getOperName() {
+		return operName;
 	}
 
 	/**
-	 * 设置接口登录账号.
+	 * 设置操作日志名称.
 	 *
-	 * @param loginNameVal 接口登录账号
+	 * @param loginNameVal 操作日志名称
 	 */
-	public void setLoginName(final String loginNameVal) {
-		this.loginName = loginNameVal;
+	public void setOperName(final String operName) {
+		this.operName = operName;
 	}
 
-	/**
-	 * 获取接口登录密码.
-	 *
-	 * @return 接口登录密码
-	 */
-	public String getPassword() {
-		return password;
-	}
-
-	/**
-	 * 设置接口登录密码.
-	 *
-	 * @param passwordVal 接口登录密码
-	 */
-	public void setPassword(final String passwordVal) {
-		this.password = passwordVal;
-	}
 }

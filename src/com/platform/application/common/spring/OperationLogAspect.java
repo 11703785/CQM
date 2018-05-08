@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -18,12 +17,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.platform.application.common.dto.AbstractDto;
 import com.platform.application.sysmanage.login.LoginInfo;
 import com.platform.application.sysmanage.operlog.TmOperateLogDto;
 import com.platform.application.sysmanage.operlog.service.TmOperateLogService;
 import com.platform.application.utils.DataFormatUtils;
-
-import net.sf.json.util.JSONUtils;
 
 @Aspect
 @Component
@@ -85,78 +83,6 @@ public class OperationLogAspect {
 	}
 
 	/**
-	 * 异常通知 用于拦截service层记录异常日志
-	 *
-	 * @param joinPoint
-	 *            jp
-	 * @param e
-	 *            e
-	 */
-	@AfterThrowing(pointcut = "serviceAspect()", throwing = "e")
-	public void doAfter(final JoinPoint joinPoint, final Throwable e) {
-		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
-				.getRequestAttributes()).getRequest();
-		HttpSession session = request.getSession();
-		LoginInfo loginInfo = (LoginInfo) session
-				.getAttribute(LoginInfo.HTTP_SESSION_LOGININFO);
-		String ip = request.getRemoteAddr();
-		// 获取用户请求方法的参数并序列化为JSON格式字符串
-		String params = "";
-		if (joinPoint.getArgs() != null && joinPoint.getArgs().length > 0) {
-			for (int i = 0; i < joinPoint.getArgs().length; i++) {
-				params += JSONUtils.isString(joinPoint.getArgs()[i]) + ";";
-			}
-		}
-		try {
-			/* ==========数据库日志========= */
-			TmOperateLogDto log = new TmOperateLogDto();
-			log.setUserId(loginInfo.getUserId());
-			log.setUserName(loginInfo.getUserName());
-			log.setOprOrgCode(loginInfo.getOrgCode());
-			log.setOrgName(loginInfo.getOrgName());
-			log.setOprInfo(getServiceMthodDescription(joinPoint));
-			log.setOprTime(new Date());
-			log.setLoginIp(ip);
-			operationLogService.persist(log.convertEntity());
-			LOGGER.info("=====异常通知结束=====");
-		} catch (Exception ex) {
-			// 记录本地异常日志
-			LOGGER.error("异常信息:{}" + e.getMessage());
-		}
-
-	}
-
-	/**
-	 * 获取注解中对方法的描述信息 用于service层注解
-	 *
-	 * @param joinPoint
-	 *            切点
-	 * @return 方法描述
-	 * @throws Exception
-	 *             ex
-	 */
-	@SuppressWarnings("rawtypes")
-	public static String getServiceMthodDescription(final JoinPoint joinPoint)
-			throws Exception {
-		String targetName = joinPoint.getTarget().getClass().getName();
-		String methodName = joinPoint.getSignature().getName();
-		Object[] arguments = joinPoint.getArgs();
-		Class targetClass = Class.forName(targetName);
-		Method[] methods = targetClass.getMethods();
-		String description = "";
-		for (Method method : methods) {
-			if (method.getName().equals(methodName)) {
-				Class[] clazzs = method.getParameterTypes();
-				if (clazzs.length == arguments.length) {
-					description = method.getAnnotation(OperationServiceLog.class).description();
-					break;
-				}
-			}
-		}
-		return description;
-	}
-
-	/**
 	 * 获取注解中对方法的描述信息 用于Controller层注解
 	 *
 	 * @param joinPoint
@@ -183,6 +109,14 @@ public class OperationLogAspect {
 				}
 			}
 		}
+		// 获取用户请求方法的参数并序列化为JSON格式字符串
+		String params = "";
+		if (joinPoint.getArgs() != null && joinPoint.getArgs().length > 0) {
+			//				for (int i = 0; i < joinPoint.getArgs().length; i++) {
+			params += ((AbstractDto)joinPoint.getArgs()[0]).getOperName();
+			//				}
+		}
+		description += ":" + params;
 		return description;
 	}
 

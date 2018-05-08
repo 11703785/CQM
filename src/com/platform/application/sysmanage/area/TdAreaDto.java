@@ -76,6 +76,7 @@ public class TdAreaDto extends AbstractDto implements Serializable {
 	 * @param name
 	 */
 	public void setName(final String name) {
+		setOperName(name + "[" + getAreaId() + "]");
 		this.name = name;
 	}
 

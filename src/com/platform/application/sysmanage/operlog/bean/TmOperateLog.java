@@ -241,9 +241,11 @@ public class TmOperateLog implements java.io.Serializable {
 		final TmOperateLogDto dto = new TmOperateLogDto();
 		dto.setId(this.id);
 		dto.setUserId(this.userId);
+		dto.setUserName(userName);
 		dto.setOprInfo(this.oprInfo);
 		dto.setOprTime(this.oprTime);
 		dto.setOprOrgCode(this.oprOrgCode);
+		dto.setOrgName(orgName);
 		dto.setLoginIp(this.loginIp);
 		return dto;
 	}

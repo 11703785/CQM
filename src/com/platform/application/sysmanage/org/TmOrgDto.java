@@ -131,6 +131,7 @@ public class TmOrgDto extends AbstractDto {
 	 * @param orgNameVal 机构名称
 	 */
 	public void setOrgName(final String orgNameVal) {
+		setOperName(orgNameVal + "[" + getOrgCode() + "]");
 		this.orgName = orgNameVal;
 	}
 

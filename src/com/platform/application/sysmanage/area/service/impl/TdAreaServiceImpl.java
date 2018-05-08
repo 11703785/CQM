@@ -32,7 +32,7 @@ public class TdAreaServiceImpl extends AbstractService implements TdAreaService 
 	private static final Logger LOGGER = Logger.getLogger(TdAreaServiceImpl.class);
 
 	@Override
-	public TdAreaDto persist(final TdArea tdArea) {
+	public TdAreaDto persist(final TdArea tdArea) throws Exception {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("开始新增辖区[" + tdArea + "]");
 		}
@@ -156,12 +156,12 @@ public class TdAreaServiceImpl extends AbstractService implements TdAreaService 
 				dtos.add(u.convertDto());
 			}
 			if (LOGGER.isDebugEnabled()) {
-				LOGGER.debug("查询用户信息成功,条件[" + results + "]");
+				LOGGER.debug("查询辖区信息成功,条件[" + results + "]");
 			}
 			return new PageResponse<TdAreaDto>(true, count, page, rows, dtos);
 		} catch (final RuntimeException re) {
-			LOGGER.error("查询用户信息失败,条件[" + dto + "]:" + re.getMessage(), re);
-			return new PageResponse<TdAreaDto>(false, "查询用户信息失败!");
+			LOGGER.error("查询辖区信息失败,条件[" + dto + "]:" + re.getMessage(), re);
+			return new PageResponse<TdAreaDto>(false, "查询辖区信息失败!");
 		}
 	}
 
@@ -233,18 +233,17 @@ public class TdAreaServiceImpl extends AbstractService implements TdAreaService 
 		.append("\",\"text\":\"")
 		.append(entity.getName())
 		.append("[").append(entity.getAreaId()).append("]\"");
-		// 查询上级机构为orgCode的机构
+		// 查询上级辖区为orgCode的机构
 		this.getChildren("62100", buf);
 		buf.append("}]");
 		return buf.toString();
 	}
 
 	/**
-	 * 逐级获取机构树.
+	 * 逐级获取辖区树.
 	 *
-	 * @param upOrg   上级机构代码
-	 * @param orgCode 目标机构代码
-	 * @param buf     机构树字符串缓存
+	 * @param upOrg   上级辖区代码
+	 * @param buf     辖区树字符串缓存
 	 */
 	@SuppressWarnings("unchecked")
 	@Transactional(readOnly = true)

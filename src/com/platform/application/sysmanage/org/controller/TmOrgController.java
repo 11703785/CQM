@@ -25,6 +25,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.platform.application.common.cache.CacheProxyFactory;
 import com.platform.application.common.dto.PageResponse;
 import com.platform.application.common.dto.ResultResponse;
+import com.platform.application.common.spring.OperationControllerLog;
+import com.platform.application.common.spring.OperationType;
 import com.platform.application.sysmanage.login.LoginInfo;
 import com.platform.application.sysmanage.org.TmOrgDto;
 import com.platform.application.sysmanage.org.cache.TmOrgCache;
@@ -97,14 +99,14 @@ public class TmOrgController {
 	}
 
 	/**
-     * 获取机构查询界面.
-     *
-     * @return 机构查询界面
-     */
-    @RequestMapping(value = "/showquery", method = RequestMethod.GET)
-    public ModelAndView getQueryPage() {
-        return new ModelAndView("sysmanage/org/query");
-    }
+	 * 获取机构查询界面.
+	 *
+	 * @return 机构查询界面
+	 */
+	@RequestMapping(value = "/showquery", method = RequestMethod.GET)
+	public ModelAndView getQueryPage() {
+		return new ModelAndView("sysmanage/org/query");
+	}
 
 	/**
 	 * 根据机构代码和角色类型获取机构的角色信息.
@@ -127,6 +129,7 @@ public class TmOrgController {
 	 * @return 新增机构结果
 	 */
 	@RequestMapping(method = RequestMethod.POST, produces = {MediaTypeUtils.UTF_8})
+	@OperationControllerLog(description = "新增机构", type = OperationType.ADD)
 	public ResultResponse<TmOrgDto> save(@RequestBody @Valid final TmOrgDto orgDto, final BindingResult result, final HttpSession session) {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("POST /org 开始新增机构[" + orgDto + "]");
@@ -164,6 +167,7 @@ public class TmOrgController {
 	 * @return 更新结果
 	 */
 	@RequestMapping(method = RequestMethod.PUT, produces = {MediaTypeUtils.UTF_8})
+	@OperationControllerLog(description = "修改机构", type = OperationType.UPDATE)
 	public ResultResponse<TmOrgDto> update(@RequestBody @Valid final TmOrgDto orgDto, final BindingResult result, final HttpSession session) {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("PUT /org 开始更新机构信息[" + orgDto + "]");
