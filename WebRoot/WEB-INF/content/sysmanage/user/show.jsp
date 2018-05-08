@@ -10,6 +10,8 @@
 			<div>
 				<a href="javascript:void(0)" class="easyui-linkbutton"
 					iconCls="icon-add" plain="true" onclick="javascript:addUser()">新增</a>
+				<a class="easyui-linkbutton" iconCls="icon-search" plain="true"
+              		onclick="javascript:$('#user_querywin').window('open');">查询</a>
 			</div>
 		</div>
 		<table id="user_dg"
@@ -38,6 +40,9 @@
 				</tr>
 			</thead>
 		</table>
+		<div id="user_querywin" class="easyui-dialog" title="查询用户"
+         data-options="modal:true,closed:true,iconCls:'icon-search',draggable:false,closable:false,href:'user/showquery'"
+         style="width:542px;height:178px;"></div>
 	</div>
 </div>
 <script type="text/javascript">

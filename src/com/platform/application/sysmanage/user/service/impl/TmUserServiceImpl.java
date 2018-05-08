@@ -20,8 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.platform.application.common.cache.CacheProxyFactory;
 import com.platform.application.common.dto.PageResponse;
-import com.platform.application.common.spring.OperationServiceLog;
-import com.platform.application.common.spring.OperationType;
 import com.platform.application.sysmanage.login.LoginInfo;
 import com.platform.application.sysmanage.org.TmOrgDto;
 import com.platform.application.sysmanage.org.cache.TmOrgCache;
@@ -57,7 +55,6 @@ public class TmUserServiceImpl extends AbstractService implements TmUserService 
 	 * @return 保存后交互对象
 	 */
 	@Override
-	@OperationServiceLog(type = OperationType.ADD, description = "新增用户")
 	public UserDto persist(final TmUser tranInst) {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("开始新增用户[" + tranInst + "]");
@@ -262,6 +259,14 @@ public class TmUserServiceImpl extends AbstractService implements TmUserService 
 			}
 			if(userDto.getCreateTime()!=null){
 				criteria.add(Restrictions.eq("createTime", userDto.getCreateTime()));
+			}
+			if (userDto.getQueryStartTime() != null) {
+				criteria.add(Restrictions.ge("createTime",
+						userDto.getQueryStartTime()));
+			}
+			if (userDto.getQueryEndTime() != null) {
+				criteria.add(Restrictions.le("createTime",
+						userDto.getQueryEndTime()));
 			}
 			if(StringUtils.isNotBlank(userDto.getRoles())){
 				criteria.add(Restrictions.eq("roles", userDto.getRoles()));

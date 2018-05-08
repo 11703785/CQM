@@ -80,6 +80,16 @@ public class TmUserController extends BaseAction {
 
 		return mv;
 	}
+	
+	/**
+     * 获取用户查询界面.
+     *
+     * @return 用户查询界面
+     */
+    @RequestMapping(value = "/showquery", method = RequestMethod.GET)
+    public ModelAndView getQueryPage() {
+        return new ModelAndView("sysmanage/user/query");
+    }
 
 	/**
 	 * 获取详细信息界面.
@@ -189,7 +199,6 @@ public class TmUserController extends BaseAction {
 	 * @return ResultResponse<UserDto>
 	 */
 	@RequestMapping(method = RequestMethod.POST, produces = { MediaTypeUtils.UTF_8 })
-	@OperationControllerLog(description = "新增用户", type = OperationType.ADD)
 	public ResultResponse<UserDto> save(@RequestBody @Valid final UserDto userDto, final BindingResult result,
 			final HttpSession session) {
 		if (LOGGER.isDebugEnabled()) {
@@ -235,7 +244,6 @@ public class TmUserController extends BaseAction {
 	 * @return ResultResponse<UserDto>
 	 */
 	@RequestMapping(method = RequestMethod.PUT, produces = { MediaTypeUtils.UTF_8 })
-	@OperationControllerLog(description = "修改用户", type = OperationType.UPDATE)
 	public ResultResponse<UserDto> update(@RequestBody @Valid final UserDto instance, final BindingResult result, final HttpSession session) {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("PUT /user [" + instance + "]");
@@ -273,6 +281,7 @@ public class TmUserController extends BaseAction {
 	 * @return PageResponse<TmUserDto>
 	 */
 	@RequestMapping(value = "/find", method = RequestMethod.POST, produces = { MediaTypeUtils.UTF_8 })
+	@OperationControllerLog(description = "查询用户", type = OperationType.QUERY)
 	public PageResponse<UserDto> findByDto(@RequestBody final UserDto dto, final HttpSession session) {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("POST /user/find [" + dto + "]");
